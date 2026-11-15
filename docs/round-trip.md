@@ -32,6 +32,11 @@ Terms used below:
    - new and re-serialized entries carry a fixed zip date (1980-01-01 00:00, override with
      `writeDocx(doc, { zipDate })`);
    - `src/` never reads the clock (`Date.now()`, `new Date()` without arguments).
+
+   Identical bytes hold for one deflate backend. Dirty and new entries are compressed with native
+   zlib where the runtime has it (Node, Bun, Deno) and with fflate elsewhere, and the two produce
+   different (equally valid) compressed bytes. For output that is identical across runtimes, pass
+   `writeDocx(doc, { deflate: 'fflate' })`.
 6. **Namespaces and `mc:Ignorable` are fixed up.** Before a dirty part is written, every prefix used by
    an element or attribute is declared on the root element if it is not in scope. Extension
    namespaces that older Word versions do not understand (`w14`, `w15`, `w16*`, `wp14`, ...) are added
@@ -40,6 +45,17 @@ Terms used below:
    consumers reject otherwise. A prefix the source used without declaring it (some generators do)
    is read as its conventional OOXML namespace (`w` → WordprocessingML) and declared on save. The
    fix-up changes only the output, never the DOM.
+
+## The zip container
+
+- Clean entries keep their compressed bytes, CRC-32, compression method and timestamp. Dirty and new
+  entries get a fresh local header with the fixed date, no data descriptor and the UTF-8 name flag.
+- New media that are already compressed (PNG, JPEG, GIF, nested Office files, audio, video, ...)
+  are stored rather than deflated, and any entry is stored when deflating would not make it
+  smaller.
+- **Directory entries** (zip entries ending in `/`, which some producers add) are not parts. A no-op
+  save keeps them, since it returns the input bytes; any save after an edit leaves them out.
+- ZIP64 archives are read; writing is limited to 4 GiB and 65,534 entries.
 
 ## Losses by design
 
@@ -51,18 +67,28 @@ characters that XML forbids, none of them changes what the XML means.
 | DOCTYPE | The `<!DOCTYPE ...>` declaration is dropped. | DTDs are never read or expanded (see [SECURITY.md](../SECURITY.md)). Office never writes one. |
 | Spelling of character references | `&#65;`, `&#x41;` and `A` are all written as `A`; only characters that must be escaped are escaped. | References are decoded at parse time; the DOM stores text, not markup. |
 | CDATA delimiters | `<![CDATA[a<b]]>` is written as `a&lt;b`. | CDATA content becomes ordinary text. |
-| CRLF inside the root element | `\r\n` (and a lone `\r`) inside the root element becomes `\n`. | XML end-of-line handling (XML 1.0, section 2.11). |
+| CRLF inside the root element | `\r\n` (and a lone `\r`) inside the root element becomes `\n`. Whitespace outside the root (after the XML declaration) is kept as written. A CR you put into text through the API is written as `&#13;`, so it survives the next parse. | XML end-of-line handling (XML 1.0, section 2.11). |
 | Literal whitespace in attribute values | A literal tab, CR or LF in an attribute value becomes a space. Escaped ones (`&#10;`) are kept. | Attribute-value normalization (XML 1.0, section 3.3.3). |
 | Characters not allowed in XML 1.0 | C0 control characters other than tab, LF and CR, U+FFFE, U+FFFF and unpaired surrogates are removed from text and attribute values, including text you set through the API. | They make a part unreadable. |
 | Text encoding | A dirty part is always written as UTF-8 (UTF-16 and declared single-byte encodings are decoded on read); a declaration naming another encoding is rewritten. A UTF-8 byte-order mark is kept. | One encoding on output keeps the writer simple. |
 
 Markup spellings the DOM does not record are written in Word's own style: `<x></x>` becomes
 `<x/>`, attribute values are double-quoted, and attributes are separated by one space. Since Word
-writes parts that way, a part Word saved usually re-serializes byte for byte outside your edits.
+writes parts that way, a part Word saved usually re-serializes byte for byte outside your edits:
+on the test corpus, about 84% of XML parts come back byte-identical, and the rest differ only in
+the spellings above (mostly `<x></x>` in `docProps` and custom XML parts written by other tools).
+
+Namespace edge cases: a prefix bound to a different URI deeper in the tree is re-declared on that
+element rather than on the root, and an empty prefixed declaration (`xmlns:p=""`, which XML 1.0
+namespaces forbid) is rejected as an `XmlParseError`.
 
 ## Where this is tested
 
 - No-op saves are byte-identical across the whole fixture corpus.
 - After editing one part, every other entry's compressed payload and CRC are unchanged.
 - Every XML part is forced dirty, saved, reparsed and compared with `domEqual`.
-- Saved files are opened in LibreOffice headless in CI, and in Word by hand before each release.
+- The same checks run on synthetic Strict OOXML copies of the corpus, and the fuzz test re-saves
+  mutated documents.
+- Edited and composed outputs pass `validatePackage` with no new errors and convert in LibreOffice
+  headless (in the tests and in CI). The Word smoke pack (`test/smoke/word-pack.mjs`) is meant to be
+  opened in Word by hand before each release; for v0.1.0 that check is still pending.

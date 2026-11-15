@@ -33,36 +33,73 @@ in LibreOffice headless.
 
 ## Tests
 
-- `test/<area>.test.ts`: one file per area (`zip`, `xml-dom`, `opc`, `round-trip`, ...).
+- `test/<area>.test.ts`: one or more files per area (`zip`, `xml`, `opc`, `wml`, `compose*`,
+  `text*`, `fields*`, `forms*`, `layout*`, `pdf*`, ...).
 - `test/conventions.test.ts`: the rules below that a machine can check (layer imports, no `node:`
-  imports outside `src/zip/node.ts`, no clock or `Math.random` in `src/`).
-- `test/api-surface.test.ts`: compares the public exports with the committed `api/report.txt`. When
-  you change the API on purpose, update it with `npx vitest run test/api-surface.test.ts -u` and
-  commit the diff.
-- `test/fixtures/`: .docx files used by the tests, listed in `test/fixtures/SOURCES.md`.
+  imports outside `src/zip/node.ts`, no clock or `Math.random` in `src/`, `.js` import extensions,
+  licence files in the package).
+- `test/api-surface.test.ts`: compares the exports of every entry point (`turboword` and each
+  subpath) with the committed `api/report.txt`. When you change the API on purpose, update it with
+  `npx vitest run test/api-surface.test.ts -u` and commit the diff.
+- `test/roundtrip.test.ts`: byte-identical no-op saves, force-dirty round-trips and raw-copy checks
+  over the curated corpus.
+- `test/fuzz.test.ts`: mutated XML, zips and documents must only ever throw a `TurbowordError`.
 - `bench/`: benchmarks (`pnpm bench`).
 
 Tests must pass on Windows: build paths with `fileURLToPath(new URL('./x', import.meta.url))`, never
 `URL.pathname`.
 
+### Opt-in and environment switches
+
+| Variable | Effect |
+| --- | --- |
+| `FUZZ_SEED`, `FUZZ_ITER` | Reproduce or lengthen a fuzz run (`FUZZ_STATS`, `FUZZ_TRACE`, `FUZZ_DUMP` print details) |
+| `TURBOWORD_PDF_CORPUS=1` | Lay out and render every corpus fixture to PDF and check it with qpdf and pdf.js (`TURBOWORD_PDF_OUT` keeps the files) |
+| `TURBOWORD_SKIP_LIBREOFFICE=1` | Skip the LibreOffice conversion tests in `test/compose.test.ts`; `SOFFICE` points the LibreOffice scripts and tests at a custom binary |
+| `TURBOWORD_MSOFFCRYPTO_PYTHON` | A Python with msoffcrypto-tool, to cross-check encrypted output |
+
+### Oracles and tools
+
+| Tool | What it does |
+| --- | --- |
+| `node scripts/libreoffice-check.mjs <files or dirs>` | Converts .docx files to PDF with LibreOffice headless (isolated profile), counts pages with qpdf and compares them with `test/fixtures/expected.json`; fails on any conversion error |
+| `scripts/docxcompose-diff/` | Composes the same scenarios with turboword and [docxcompose](https://github.com/4teamwork/docxcompose) and compares header/footer retention and page counts. Needs a throwaway Python venv with docxcompose; see its README |
+| `node scripts/gen-unicode.mjs` | Regenerates `src/layout/text/data/*.ts` from the Unicode Character Database (byte-identical on re-run) |
+| `node test/smoke/word-pack.mjs` | Writes `out/pack/*.docx` (no-op and force-dirty round-trips of every fixture, created and edited samples) plus `CHECKLIST.md` for opening in real Microsoft Word. Build first |
+
 ### Word smoke pack
 
-LibreOffice is more forgiving than Word. The Word smoke pack (`test/smoke/word-pack.mjs`, being
-added for the v0.1 release) writes a set of files plus a checklist to open in real Microsoft Word
-before each release, checking for "unreadable content" prompts. Results go in
-`docs/word-verification.md`. Run it whenever you change how parts are written.
+LibreOffice is more forgiving than Word. Before each release, open the smoke pack in Microsoft Word
+and work through `out/pack/CHECKLIST.md`, looking for "unreadable content" prompts and rendering
+differences. Record the results in `docs/word-verification.md`. Run it whenever you change how parts
+are written.
 
 ## Fixtures
 
+Two kinds of fixtures live in `test/fixtures/`:
+
+- **The curated corpus**: the documents listed in `test/fixtures/expected.json` (page count from
+  `docProps/app.xml`, producing application, feature tags). `fixtures()` in
+  `test/helpers/fixtures.ts` returns exactly these, and the general loops (round-trip, fuzz, smoke
+  pack, layout oracle) run over them. Keep each file ≤ 300 KB and the corpus ≤ 3 MB.
+- **Feature folders** (`compose/`, `forms/`, `crypto/`, `fonts/`, `unicode/`, ...): inputs for one
+  feature's tests, loaded by name with `fixture('<folder>/<file>')`. They stay out of the general
+  loops until vetted and added to `expected.json`.
+
+Rules for both:
+
 - **Permissive licences only:** files you made yourself, or files under MIT, BSD, Apache-2.0, CC0 or a
-  compatible licence. Nothing from GPL or LGPL projects, nothing with unclear origin.
-- **Record every file in `test/fixtures/SOURCES.md`:** origin (URL or "made in Word 16.x for Mac"),
-  licence, and what the file covers. Third-party sets keep their licence file next to them.
-- **Keep files small:** one feature per file where possible, no large images or embedded fonts unless
-  they are what the test is about.
+  compatible licence (OFL for test fonts, the Unicode licence for Unicode data). Nothing from GPL or
+  LGPL projects, nothing with unclear origin.
+- **A licence file in every folder** (`LICENSE`, `OFL*` or `COPYING*`); `test/roundtrip.test.ts`
+  fails otherwise.
+- **Record provenance in `test/fixtures/SOURCES.md`** (or the folder's own `SOURCES.md`): origin URL
+  pinned to a commit, licence, and what the file covers. Verify downloads against the upstream blob
+  SHA.
+- **Keep files small:** one feature per file where possible.
 - **No personal or confidential content.**
 - Save fixtures with Word when you can: Word records its page count (`docProps/app.xml`) and its page
-  breaks (`w:lastRenderedPageBreak`), which later serve as layout oracles.
+  breaks (`w:lastRenderedPageBreak`), which serve as layout oracles.
 
 ## Conventions
 
@@ -70,13 +107,19 @@ before each release, checking for "unreadable content" prompts. Results go in
 - **TypeScript:** strict, with `exactOptionalPropertyTypes`, `noUncheckedIndexedAccess`,
   `isolatedDeclarations` (explicit types on everything exported) and `verbatimModuleSyntax` (use
   `import type`). ESM, with `.js` extensions in relative imports.
-- **Layers:** imports only go downward (`core` ← `zip`, `xml` ← `opc` ← `wml` ← ...). See
-  [ARCHITECTURE.md](./ARCHITECTURE.md#layers). The conventions test fails otherwise.
+- **Layers:** a file may import its own directory or a directory of strictly lower rank:
+  `core` 0; `zip`, `xml` 1; `opc` 2; `wml` 3; `resolve`, `text` 4; `compose`, `fields`, `forms`,
+  `protect`, `crypto` 5; `layout` 6; `render` 7. Same-rank siblings never import each other. A new
+  top-level directory needs a rank in `test/conventions.test.ts` first. See
+  [ARCHITECTURE.md](./ARCHITECTURE.md#layers).
 - **Web APIs only in `src/`:** no `Buffer`, no `node:*` imports. The only exception is
   `src/zip/node.ts`, which looks up `node:zlib` with `process.getBuiltinModule` and has a fallback.
 - **No recursion over XML trees:** documents can be arbitrarily deep; use an explicit stack.
 - **Determinism:** no `Math.random`, no `Date.now()` or `new Date()` without arguments in `src/`. New
-  IDs come from counters or a seeded PRNG.
+  IDs come from `DocumentIds` (counters or a seeded PRNG); random bytes only where cryptography
+  needs them (`crypto.getRandomValues`).
+- **No new runtime dependencies:** fflate is the only one. Dev-only tools run ad hoc
+  (`npx --yes`, a Python venv) instead of being added to `package.json`.
 - **Errors:** throw a `TurbowordError` subclass with a stable `code`. Report recoverable problems
   through the `onWarning` callback instead of ignoring them.
 - **Comments:** each file starts with a short comment explaining why it exists; exported functions
