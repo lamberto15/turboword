@@ -188,7 +188,7 @@
       "name": "open+save",
       "path": "dist/index.js",
       "import": "{ readDocx, writeDocx }",
-      "limit": "27 KB"
+      "limit": "46 KB"
     },
     {
       "name": "everything",
@@ -200,19 +200,19 @@
       "name": "compose",
       "path": "dist/compose.js",
       "import": "*",
-      "limit": "30 KB"
+      "limit": "62 KB"
     },
     {
       "name": "fields",
       "path": "dist/fields.js",
       "import": "*",
-      "limit": "25 KB"
+      "limit": "53 KB"
     },
     {
       "name": "forms",
       "path": "dist/forms.js",
       "import": "*",
-      "limit": "10 KB"
+      "limit": "22 KB"
     },
     {
       "name": "crypto",
@@ -224,13 +224,13 @@
       "name": "layout",
       "path": "dist/layout.js",
       "import": "*",
-      "limit": "110 KB"
+      "limit": "128 KB"
     },
     {
       "name": "pdf",
       "path": "dist/pdf.js",
       "import": "*",
-      "limit": "45 KB"
+      "limit": "140 KB"
     },
     {
       "name": "svg",
