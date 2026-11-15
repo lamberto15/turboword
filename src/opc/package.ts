@@ -62,7 +62,16 @@ interface SourceEntry {
  * Reads the zip index. Malformed input becomes a DocxFormatError; limit and unsafe-path
  * violations (security signals) propagate unchanged.
  */
+/** OLE compound file signature: how encrypted Office documents (and legacy .doc) start. */
+const CFB_SIGNATURE = [0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1];
+
 function readArchive(data: Uint8Array, limits: Limits): Map<string, LazyEntry> {
+  if (data.length >= 8 && CFB_SIGNATURE.every((b, i) => data[i] === b)) {
+    throw new DocxFormatError(
+      'Not a .docx package: this is an OLE compound file — an encrypted (password-protected) ' +
+        "Office document or a legacy binary .doc. Decrypt it first with decryptDocx() from 'turboword/crypto'.",
+    );
+  }
   try {
     return unzipLazy(data, limits);
   } catch (e) {

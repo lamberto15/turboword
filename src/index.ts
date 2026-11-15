@@ -5,6 +5,10 @@
 //
 //   readDocx / loadDocx / createDocx  →  WordDocument  →  writeDocx / docxBlob / docxStream
 //
+// The root entry holds the document model, editing, text search/replace, revisions, formatting
+// resolution and protection. Heavier features live in subpaths so they tree-shake away:
+// turboword/compose, /fields, /forms, /crypto, /layout, /pdf, /svg.
+//
 // Layers below the document model (OPC package, XML DOM, errors, limits) are exported too, for
 // work the typed views do not cover yet: every part, relationship and node stays reachable.
 
@@ -19,7 +23,59 @@ export { OpcPackage, type OpenOptions, type SaveOptions } from './opc/package.js
 export { Part } from './opc/part.js';
 export { CT, REL, relTypeIs } from './opc/rel-types.js';
 export { type AddRelationshipOptions, type Relationship, Relationships } from './opc/rels.js';
-
+// ---- protection -----------------------------------------------------------------------------
+export {
+  type ProtectionHashAlgorithm,
+  type ProtectionMode,
+  type ProtectOptions,
+  protectDocument,
+  protectionOf,
+  unprotectDocument,
+  verifyProtectionPassword,
+} from './protect/index.js';
+// ---- formatting resolution (style cascade, theme, list labels) ------------------------------
+export {
+  type Alignment,
+  type BorderSpec,
+  type Borders,
+  type CellMargins,
+  formatNumber,
+  type ListInfo,
+  listInfo,
+  listLabel,
+  type ResolvedCellProps,
+  type ResolvedParagraphProps,
+  type ResolvedRunProps,
+  type ResolvedTableProps,
+  resolveCell,
+  resolveParagraph,
+  resolveRun,
+  resolveTable,
+  type TabStop,
+  type ThemeInfo,
+  themeOf,
+} from './resolve/index.js';
+// ---- text: find/replace across runs, revisions --------------------------------------------
+export {
+  acceptAllRevisions,
+  type FindOptions,
+  type FlatText,
+  findText,
+  flatten,
+  type Replacement,
+  type ReplaceOptions,
+  type RunInput,
+  rejectAllRevisions,
+  replaceText,
+  type SearchScope,
+  type TextMatch,
+} from './text/index.js';
+export {
+  Bookmark,
+  type BookmarkRange,
+  Bookmarks,
+  MAX_BOOKMARK_NAME,
+} from './wml/bookmarks.js';
 // ---- documents ----------------------------------------------------------------------------
 export { createDocx } from './wml/create.js';
 export {
@@ -34,8 +90,33 @@ export {
   type WriteOptions,
   writeDocx,
 } from './wml/document.js';
-export { HeaderFooter, type HeaderFooterKind } from './wml/header-footer.js';
-export { Paragraph, Run, type RunProps } from './wml/paragraph.js';
+export {
+  copyHeaderFooter,
+  createHeaderFooter,
+  HeaderFooter,
+  type HeaderFooterKind,
+} from './wml/header-footer.js';
+export { Hyperlink } from './wml/hyperlinks.js';
+export { DocumentIds, type HexIdKind, type NumericIdKind } from './wml/ids.js';
+export {
+  type AddedImage,
+  addImagePart,
+  type ImageInfo,
+  type ImageRef,
+  imageInfo,
+  inlineDrawing,
+} from './wml/media.js';
+export {
+  type HighlightColor,
+  type HyperlinkProps,
+  type ImageOptions,
+  type LineSpacing,
+  Paragraph,
+  type ParagraphAlignment,
+  Run,
+  type RunProps,
+  type UnderlineStyle,
+} from './wml/paragraph.js';
 export {
   type AppProperties,
   type CoreDateProperty,
@@ -44,14 +125,29 @@ export {
   DocumentProperties,
 } from './wml/properties.js';
 export {
+  evenAndOddHeaders,
   type HeaderFooterType,
+  insertSectionBreak,
   type PageMargins,
+  type PageOrientation,
   type PageSize,
+  removeSectionBreak,
   Section,
   type SectionType,
+  setEvenAndOddHeaders,
 } from './wml/section.js';
 export { type Block, Story, type StoryKind } from './wml/story.js';
-export { type GridCell, Table, TableCell, type TableGrid, TableRow } from './wml/table.js';
+export {
+  type CellVerticalAlignment,
+  type CloneRowOptions,
+  type GridCell,
+  newTable,
+  type RowHeightRule,
+  Table,
+  TableCell,
+  type TableGrid,
+  TableRow,
+} from './wml/table.js';
 export { paragraphText, type VisibleVisitor, walkVisible } from './wml/text.js';
 export { type ValidationIssue, validatePackage } from './wml/validate.js';
 

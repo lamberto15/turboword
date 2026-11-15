@@ -81,3 +81,25 @@ No permissively licensed file was found for these, so they are not covered yet:
    byte-identical to upstream.
 3. Add a row to the table above (pinned URL, licence, app + version from `docProps/app.xml`,
    features) and an entry to `expected.json`.
+
+## Feature fixtures (outside the curated corpus)
+
+Folders below hold inputs for one feature's tests. They are loaded by name through
+`fixture()` in `test/helpers/fixtures.ts` and are not part of the 16-file corpus above (so the
+corpus size budget does not apply). Every folder carries its licence text; per-file provenance
+is in the folder's own `SOURCES.md` where one exists.
+
+| Folder | Source (pinned commit) | Licence | Used by |
+| --- | --- | --- | --- |
+| `compose/` | [4teamwork/docxcompose](https://github.com/4teamwork/docxcompose) `tests/docs` @ `b8bac82507786aa350178ad39bfeb9555b3f7429` (60 files); [OfficeDev/Open-Xml-PowerTools](https://github.com/OfficeDev/Open-Xml-PowerTools) `TestFiles/DB*` @ `5881422a881f6ccefce2b9801b5dc6a753670d6e` (50 files). Per-file list in `compose/SOURCES.md`. | MIT | `test/compose*.test.ts`, `scripts/docxcompose-diff` |
+| `compose-styles/` | [4teamwork/docxcompose](https://github.com/4teamwork/docxcompose) `tests/docs` @ `b8bac82507786aa350178ad39bfeb9555b3f7429` (19 files) | MIT | `test/compose-styles.test.ts`, `test/compose-numbering.test.ts` |
+| `crypto/apache-poi/` | [apache/poi](https://github.com/apache/poi) `test-data/document` @ `47dcff769bb395034dddfd59c4609659b6dbc6a4`: `bug53475-password-is-pass.docx`, `bug53475-password-is-solrcell.docx`, `bug56076.docx`, `protected_sample.docx`, `documentProtection_readonly_no_password.docx`, `documentProtection_no_protection_tag_existing.docx`, `EnforcedWith.docx` | Apache-2.0 | `test/crypto.test.ts`, `test/protect.test.ts` |
+| `crypto/msoffcrypto-tool/` | [nolze/msoffcrypto-tool](https://github.com/nolze/msoffcrypto-tool) `tests/inputs` @ `bdb71ea5`: `example_password.docx`, `example.docx`, `ecma376standard_password.docx`, `ecma376standard_password_plain.docx` | MIT | `test/crypto.test.ts` |
+| `fields/` | [iulica/docx-mailmerge](https://github.com/iulica/docx-mailmerge) `tests/` @ `7e2aeb29443f50025c3b67881b993281b3edb77d` (12 files) | MIT | `test/fields*.test.ts` |
+| `fonts/` | Carlito, Caladea, Liberation Sans/Serif/Mono (regular and bold), stored gzipped and byte-identical after gunzip; checksums and URLs in `fonts/SOURCES.md` | OFL-1.1 | `test/fonts*.test.ts`, `test/helpers/test-fonts.ts`, layout/PDF tests |
+| `forms/docx4j/` | [plutext/docx4j](https://github.com/plutext/docx4j) @ `836eab29`: `LegacyForms`, `invoice2013`, `typed-controls`, `typed-controls-dates`, `picture`, `w15-repeating-section-three-items` | Apache-2.0 | `test/forms-fixtures.test.ts` |
+| `forms/open-xml-sdk/` | [dotnet/Open-XML-SDK](https://github.com/dotnet/Open-XML-SDK) @ `431ab05cf160248cc3885a4a766026d4f8243792`: `sdtRow`, `sdtCell`, `sdtRun`, `sdtDataBinding`, `simpleSdt` | MIT | `test/forms-fixtures.test.ts` |
+| `forms/apache-poi/` | [apache/poi](https://github.com/apache/poi) @ `47dcff769bb395034dddfd59c4609659b6dbc6a4`: `Bug54849`, `Bug54771a`, `checkboxes`, `form_footnotes` | Apache-2.0 | `test/forms-fixtures.test.ts` |
+| `graphics/apache-poi/` | [apache/poi](https://github.com/apache/poi) `test-data/document` @ `47dcff769bb395034dddfd59c4609659b6dbc6a4`: `61745.docx`, `chartex.docx`, `VariousPictures.docx` | Apache-2.0 | `test/graphics*.test.ts` |
+| `resolve/` | Apache POI, docx4j and Apache Tika (Apache-2.0), docx2python (MIT), mammoth (BSD-2-Clause); LibreOffice reference outputs in `resolve/lo/`. Per-file provenance in `resolve/SOURCES.md`. | as listed | `test/resolve*.test.ts`, `test/list-labels.test.ts` |
+| `unicode/` | Unicode 16.0 `LineBreakTest.txt`, `BidiTest.txt`, `BidiCharacterTest.txt` from <https://www.unicode.org/Public/16.0.0/ucd/>, stored gzipped | Unicode License v3 | `test/unicode*.test.ts` |

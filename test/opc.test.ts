@@ -593,3 +593,12 @@ describe('open errors and warnings', () => {
     expect(dec.decode(unzipLazy(out).get('word/a.xml')!.bytes())).toContain('first');
   });
 });
+
+describe('encrypted input', () => {
+  it('explains that an OLE compound file must be decrypted first', () => {
+    const cfb = new Uint8Array(512);
+    cfb.set([0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1]);
+    expect(() => OpcPackage.open(cfb)).toThrow(DocxFormatError);
+    expect(() => OpcPackage.open(cfb)).toThrow(/decryptDocx/);
+  });
+});

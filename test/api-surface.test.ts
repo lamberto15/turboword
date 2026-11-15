@@ -12,6 +12,13 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 /** Published entry point -> source file. Add a line per subpath export in package.json. */
 const ENTRIES: Record<string, string> = {
   turboword: 'src/index.ts',
+  'turboword/compose': 'src/compose/index.ts',
+  'turboword/fields': 'src/fields/index.ts',
+  'turboword/forms': 'src/forms/index.ts',
+  'turboword/crypto': 'src/crypto/index.ts',
+  'turboword/layout': 'src/layout/index.ts',
+  'turboword/pdf': 'src/render/pdf/index.ts',
+  'turboword/svg': 'src/render/svg/index.ts',
 };
 
 const toTs = (from: string, spec: string): string =>

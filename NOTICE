@@ -21,7 +21,7 @@ Parts of src/zip and src/xml are adapted from turbosheet
 (https://github.com/lamberto15/turbosheet) and turbomerge
 (https://github.com/lamberto15/turbomerge), MIT licensed, by the same authors.
 
-Field-parsing code planned for src/fields is adapted from docx-mailmerge
+Field-parsing code in src/fields is adapted from docx-mailmerge
 (https://github.com/Bouke/docx-mailmerge) and docx-mailmerge2
 (https://github.com/iulica/docx-mailmerge), via turbomerge:
 
@@ -34,5 +34,9 @@ is generated from the Unicode Character Database 16.0 (scripts/gen-unicode.mjs) 
 used under the Unicode License v3 (https://www.unicode.org/license.txt).
 Copyright (c) 1991-2024 Unicode, Inc.
 
+Standard-14 font metrics in src/layout/fonts/standard14-data.ts are derived from
+Adobe's Core14 AFM files via pdf.js (https://github.com/mozilla/pdf.js),
+Apache License 2.0.
+
 Test fixtures under test/fixtures keep their own licenses; see
-test/fixtures/SOURCES.md.
+test/fixtures/SOURCES.md. They are not part of the published package.
