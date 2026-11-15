@@ -4,13 +4,14 @@
 // any tool can remove it (that is what unprotectDocument does). The optional password is stored
 // as Word's salted, iterated hash of its legacy password key (see hash.ts).
 //
-// Attribute form. Word itself (2007 to 365) writes the ECMA-376 Part 4 transitional attributes
-// (w:cryptProviderType ... w:cryptAlgorithmSid w:cryptSpinCount w:hash w:salt); it only writes
-// the ISO attributes (w:algorithmName w:hashValue w:saltValue w:spinCount) when the
-// UseIsoPasswordVerifier registry key is set (MS-OI29500 2.1.402 note f), and it ignores the ISO
-// attributes when both forms are present (MS-OI29500 2.1.1775). So transitional documents get
-// Word's own form (SHA-512: rsaAES, sid 14) and Strict documents, whose schema has only the ISO
-// attributes, get those — the same choice Aspose.Words makes. Both are hashed the same way.
+// Attribute form. By default the ISO/IEC 29500 attributes are written (w:algorithmName
+// w:hashValue w:saltValue w:spinCount): the current standard form, and the only one the Strict
+// schema allows. `attributes: 'legacy'` writes the ECMA-376 Part 4 transitional attributes
+// instead (w:cryptProviderType ... w:cryptAlgorithmSid w:cryptSpinCount w:hash w:salt), which is
+// what Word itself writes unless its UseIsoPasswordVerifier registry key is set (MS-OI29500
+// 2.1.402 note f); Word ignores the ISO attributes when both forms are present (2.1.1775), so
+// only one form is ever written. Both are hashed the same way (Word's legacy key pre-processing,
+// then salted, iterated SHA), and verifyProtectionPassword reads both.
 //
 // Placement: CT_Settings is an XSD sequence, so w:documentProtection (and w:trackRevisions for
 // the trackedChanges mode) are inserted at their schema position. Elements of other namespaces
@@ -42,6 +43,12 @@ export interface ProtectOptions {
   salt?: Uint8Array;
   /** Hash algorithm. Default 'SHA-512' (Word 2013+); Word 2007/2010 wrote 'SHA-1'. */
   algorithm?: ProtectionHashAlgorithm;
+  /**
+   * Attribute form for the password hash: 'iso' (default; w:algorithmName, w:hashValue,
+   * w:saltValue, w:spinCount) or 'legacy' (Word's transitional w:cryptProviderType ... w:hash,
+   * w:salt). Strict documents always get 'iso', the only form their schema allows.
+   */
+  attributes?: 'iso' | 'legacy';
 }
 
 const MODES: readonly string[] = ['readOnly', 'comments', 'trackedChanges', 'forms'];
@@ -240,6 +247,9 @@ export function protectDocument(doc: WordDocument, o: ProtectOptions): void {
     throw new UsageError(`Unsupported protection hash algorithm: ${String(algorithm)}`);
   }
   if (o.salt !== undefined && o.salt.length === 0) throw new UsageError('salt must not be empty');
+  if (o.attributes !== undefined && o.attributes !== 'iso' && o.attributes !== 'legacy') {
+    throw new UsageError(`Unknown protection attribute form: ${String(o.attributes)}`);
+  }
 
   const settings = settingsOf(doc, true)!;
   const old = settings.element(NS.w, 'documentProtection');
@@ -250,7 +260,7 @@ export function protectDocument(doc: WordDocument, o: ProtectOptions): void {
   if (o.password !== undefined && o.password !== '') {
     const salt = o.salt ?? randomSalt();
     const hash = toBase64(protectionHash(fn, salt, o.password, spin));
-    if (isStrict(settings)) {
+    if (o.attributes !== 'legacy' || isStrict(settings)) {
       attrs.algorithmName = algorithm;
       attrs.hashValue = hash;
       attrs.saltValue = toBase64(salt);

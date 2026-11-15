@@ -134,7 +134,7 @@ describe('protection hash', () => {
         salt,
         spinCount: 77,
       });
-      expect(protection(doc)['w:hash'], algorithm).toBe(refHash(node, salt, 'Secret', 77));
+      expect(protection(doc)['w:hashValue'], algorithm).toBe(refHash(node, salt, 'Secret', 77));
       expect(verifyProtectionPassword(doc, 'Secret')).toBe(true);
       expect(verifyProtectionPassword(doc, 'secret')).toBe(false);
     }
@@ -180,9 +180,30 @@ describe('Word-written protection', () => {
 });
 
 describe('protectDocument', () => {
-  it('writes Word 2013+ attributes (rsaAES, sid 14) at the schema position', () => {
+  it('writes the ISO attributes (w:algorithmName) by default, at the schema position', () => {
     const doc = createDocx();
     protectDocument(doc, { mode: 'readOnly', password: PW, salt: SALT, spinCount: 1000 });
+    const hash = refHash('sha512', SALT, PW, 1000);
+    expect(settingsXml(doc)).toContain(
+      `<w:zoom w:percent="100"/><w:documentProtection w:edit="readOnly" w:enforcement="1" w:algorithmName="SHA-512" w:hashValue="${hash}" w:saltValue="hIqOl99kIr/+N0hyovEq7Q==" w:spinCount="1000"/><w:defaultTabStop`,
+    );
+    expect(settingsXml(doc)).not.toContain('cryptProviderType');
+    expect(protectionOf(doc)).toEqual({ mode: 'readOnly', hasPassword: true });
+    expect(verifyProtectionPassword(doc, PW)).toBe(true);
+    expect(verifyProtectionPassword(doc, 'Exampl')).toBe(false);
+    const back = readDocx(writeDocx(doc));
+    expect(verifyProtectionPassword(back, PW)).toBe(true);
+  });
+
+  it("writes Word's transitional attributes (rsaAES, sid 14) with attributes: 'legacy'", () => {
+    const doc = createDocx();
+    protectDocument(doc, {
+      mode: 'readOnly',
+      password: PW,
+      salt: SALT,
+      spinCount: 1000,
+      attributes: 'legacy',
+    });
     const hash = refHash('sha512', SALT, PW, 1000);
     expect(settingsXml(doc)).toContain(
       `<w:zoom w:percent="100"/><w:documentProtection w:edit="readOnly" w:enforcement="1" w:cryptProviderType="rsaAES" w:cryptAlgorithmClass="hash" w:cryptAlgorithmType="typeAny" w:cryptAlgorithmSid="14" w:cryptSpinCount="1000" w:hash="${hash}" w:salt="hIqOl99kIr/+N0hyovEq7Q=="/><w:defaultTabStop`,
@@ -200,6 +221,7 @@ describe('protectDocument', () => {
       algorithm: 'SHA-1',
       salt: SALT,
       spinCount: 50000,
+      attributes: 'legacy',
     });
     expect(protection(doc)).toEqual({
       'w:edit': 'forms',
@@ -218,14 +240,14 @@ describe('protectDocument', () => {
     const doc = createDocx();
     protectDocument(doc, { mode: 'comments', password: 'pw' });
     const p = protection(doc);
-    expect(p['w:cryptAlgorithmSid']).toBe('14');
-    expect(p['w:cryptSpinCount']).toBe('100000');
-    expect(b64(p['w:salt']!).length).toBe(16);
-    expect(b64(p['w:hash']!).length).toBe(64);
+    expect(p['w:algorithmName']).toBe('SHA-512');
+    expect(p['w:spinCount']).toBe('100000');
+    expect(b64(p['w:saltValue']!).length).toBe(16);
+    expect(b64(p['w:hashValue']!).length).toBe(64);
     expect(verifyProtectionPassword(doc, 'pw')).toBe(true);
     const other = createDocx();
     protectDocument(other, { mode: 'comments', password: 'pw' });
-    expect(protection(other)['w:salt']).not.toBe(p['w:salt']);
+    expect(protection(other)['w:saltValue']).not.toBe(p['w:saltValue']);
   });
 
   it('is deterministic with a fixed salt', () => {
