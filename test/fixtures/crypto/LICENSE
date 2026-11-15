@@ -1,0 +1,11 @@
+Test fixtures for test/crypto.test.ts and test/protect.test.ts, copied byte for byte from
+permissively licensed projects. Each subfolder carries its project's licence:
+
+- apache-poi/        Apache POI test-data/document (Apache-2.0): see apache-poi/LICENSE and
+                     apache-poi/NOTICE. Pinned commit 47dcff769bb395034dddfd59c4609659b6dbc6a4.
+- msoffcrypto-tool/  nolze/msoffcrypto-tool tests/inputs and tests/outputs (MIT): see
+                     msoffcrypto-tool/LICENSE. Pinned commit
+                     bdb71ea5dfbdee2f3cd86f8852e74be7a6f15667.
+
+The files live one folder down so the round-trip corpus (test/helpers/fixtures.ts reads
+test/fixtures/<source>/*.docx) does not pick up encrypted containers.
