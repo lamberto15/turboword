@@ -1,4 +1,4 @@
-// turboword/layout (experimental until 1.0): pagination into a JSON-able PageModel, the page
+// turboword/layout (experimental until docs/fidelity.md meets its targets): pagination into a JSON-able PageModel, the page
 // count, and a PageInfoProvider over a layout for updateFields / updateToc.
 //
 // Page indices in DocumentLayout (paragraphPages, destinations, outline) are 0-based indices
@@ -15,7 +15,7 @@ export { FONT_SUBSTITUTIONS, loadFont } from './fonts/index.js';
 export { basicShaper, bidiLevels, lineBreakOpportunities } from './text/index.js';
 export type * from './types.js';
 
-/** Lays the document out into pages (experimental until 1.0). */
+/** Lays the document out into pages (experimental: see docs/fidelity.md). */
 export function paginate(doc: WordDocument, o?: LayoutOptions): Promise<DocumentLayout> {
   return paginateDocument(doc, o);
 }

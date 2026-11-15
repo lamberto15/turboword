@@ -1,6 +1,8 @@
 # Layout fidelity
 
-`turboword/layout` (and the PDF/SVG renderers built on it) is **experimental until 1.0**. This page
+`turboword/layout` (and the PDF/SVG renderers built on it) is **experimental until this scoreboard
+meets its targets** (exact page count ≥ 85% and line match ≥ 95% on Tier A), not until a version
+number. This page
 states how close its pagination is to Microsoft Word, how that is measured, and where it is known
 to differ. The numbers below are asserted by `test/layout-oracle.test.ts`, so a change that makes
 them worse fails CI.

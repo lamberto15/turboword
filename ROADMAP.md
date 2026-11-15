@@ -2,8 +2,10 @@
 
 Where turboword stands and what comes next. Update this file with every release.
 
-**Layout, `pageCount`, PDF and SVG stay experimental until 1.0.** Their APIs and output may change
-in any minor release. Accuracy against Word is tracked in [docs/fidelity.md](./docs/fidelity.md).
+**Layout, `pageCount`, PDF and SVG are experimental** until the scoreboard in
+[docs/fidelity.md](./docs/fidelity.md) meets its targets (exact page count ≥ 85% and line match
+≥ 95% on prose documents, measured against Word's own output), not until a particular version
+number. Until then their APIs and output may change in any minor release.
 
 ## What v0.1.0 contains
 
@@ -77,9 +79,9 @@ Grouped by area; each is a candidate for a minor release.
 4. **`@turboword/fonts`:** the metric-compatible fonts (Carlito, Caladea, Liberation, Gelasio)
    packaged with a ready `FontResolver`. The repository becomes a pnpm workspace.
 5. **The Open XML SDK validator in CI.**
-6. **1.0:** API freeze, documentation site, benchmarks, security review, verification in Word for
-   Windows, and dropping the experimental label from layout and PDF once the scoreboard justifies
-   it.
+6. **Experimental label off** for layout and PDF as soon as the scoreboard meets its targets.
+7. **1.0:** API freeze, documentation site, benchmarks, security review and verification in Word
+   for Windows.
 
 ## Risks
 

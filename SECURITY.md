@@ -42,4 +42,7 @@ on `lamberto15/turboword`. Do not open a public issue.
 Include the turboword version, the runtime, and a minimal file or script that reproduces the problem.
 A crash, hang or excessive memory use on a crafted .docx counts.
 
-Until 1.0, security fixes go into the latest release only.
+Every confirmed vulnerability gets fixed, whichever version it was reported against, and the fix is
+released as soon as it is ready. Fixes ship in a new release of the current line; if you depend on an
+older release line and cannot upgrade, say so in the report and we will publish a fix for that line
+too. You will be credited in the advisory unless you prefer not to be.
