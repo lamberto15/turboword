@@ -153,6 +153,13 @@ function table(rows) {
   return rows.map((r) => r.map((v, c) => String(v).padEnd(widths[c])).join('  ')).join('\n');
 }
 
+/** Encrypted Office documents are OLE compound files (signature D0 CF 11 E0 A1 B1 1A E1). */
+function isEncrypted(file) {
+  const head = readFileSync(file).subarray(0, 8);
+  const sig = [0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1];
+  return head.length === 8 && sig.every((b, i) => head[i] === b);
+}
+
 function main() {
   const argv = process.argv.slice(2);
   const keep = argv.includes('--keep');
@@ -175,8 +182,15 @@ function main() {
   const rows = [['file', 'pages', 'expected', 'status']];
   let failures = 0;
   let mismatches = 0;
+  let skipped = 0;
   files.forEach((file, i) => {
     const name = file.startsWith(ROOT) ? file.slice(ROOT.length) : file;
+    if (isEncrypted(file)) {
+      // password-protected: LibreOffice cannot open it headless; decryptDocx's tests cover these
+      skipped++;
+      rows.push([name, '-', '-', 'skipped (encrypted)']);
+      return;
+    }
     try {
       // one output directory per file: same basenames in different folders must not collide
       const pdf = convert(soffice, profile, file, join(work, 'pdf', String(i)));
@@ -199,7 +213,10 @@ function main() {
         'an error (install Carlito, Caladea and Liberation for comparable results)',
     );
   }
-  console.log(`${files.length - failures}/${files.length} converted`);
+  const tried = files.length - skipped;
+  console.log(
+    `${tried - failures}/${tried} converted${skipped > 0 ? ` (${skipped} encrypted skipped)` : ''}`,
+  );
   if (keep) console.log(`PDFs kept in ${join(work, 'pdf')}`);
   else rmSync(work, { recursive: true, force: true });
   return failures > 0 ? 1 : 0;

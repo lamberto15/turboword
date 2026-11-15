@@ -82,10 +82,20 @@ const runtime = globalThis.Deno
     ? `Bun ${globalThis.Bun.version}`
     : `Node ${process.versions.node}`;
 
+/** Encrypted Office files are OLE compound files, not zips: decryptDocx's tests cover them. */
+const CFB = [0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1];
+const isEncrypted = (b) => b.length >= 8 && CFB.every((x, i) => b[i] === x);
+
+let tested = 0;
 for (const fixture of fixtures) {
   const name = relative(root, fixture) || fixture;
   const input = new Uint8Array(await readFile(fixture));
+  if (isEncrypted(input)) {
+    console.log(`skip ${name} (encrypted)`);
+    continue;
+  }
   for (const [build, api] of builds) await roundTrip(`${build} ${name}`, api, input);
   console.log(`ok ${name}`);
+  tested++;
 }
-console.log(`${runtime}: dist (ESM and CJS) round-trips ${fixtures.length} fixture(s)`);
+console.log(`${runtime}: dist (ESM and CJS) round-trips ${tested} fixture(s)`);
