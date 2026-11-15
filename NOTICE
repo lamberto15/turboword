@@ -1,0 +1,38 @@
+turboword
+Copyright (c) 2026 turboword contributors
+
+Licensed under either of
+
+  * Apache License, Version 2.0 (LICENSE-APACHE or
+    https://www.apache.org/licenses/LICENSE-2.0)
+  * MIT license (LICENSE-MIT or https://opensource.org/licenses/MIT)
+
+at your option.
+
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in this work, as defined in the Apache-2.0 license, shall be dual
+licensed as above, without any additional terms or conditions.
+
+-------------------------------------------------------------------------------
+Third-party code
+-------------------------------------------------------------------------------
+
+Parts of src/zip and src/xml are adapted from turbosheet
+(https://github.com/lamberto15/turbosheet) and turbomerge
+(https://github.com/lamberto15/turbomerge), MIT licensed, by the same authors.
+
+Field-parsing code planned for src/fields is adapted from docx-mailmerge
+(https://github.com/Bouke/docx-mailmerge) and docx-mailmerge2
+(https://github.com/iulica/docx-mailmerge), via turbomerge:
+
+  Copyright (C) 2012 Bouke Haarsma, https://github.com/Bouke
+  Copyright (C) 2023 Iulian Ciorascu, https://github.com/iulica
+  Released under the MIT License.
+
+The line-breaking, bidirectional, script and mirroring data in src/layout/text/data
+is generated from the Unicode Character Database 16.0 (scripts/gen-unicode.mjs) and
+used under the Unicode License v3 (https://www.unicode.org/license.txt).
+Copyright (c) 1991-2024 Unicode, Inc.
+
+Test fixtures under test/fixtures keep their own licenses; see
+test/fixtures/SOURCES.md.

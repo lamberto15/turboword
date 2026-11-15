@@ -1,0 +1,243 @@
+{
+  "name": "turboword",
+  "version": "0.0.0",
+  "description": "Lossless editing and composition of Word .docx files in pure TypeScript: open, edit and save without losing anything, merge documents keeping their headers, footers, sections, styles and numbering. Runs on Node, Bun, Deno, browsers and workers.",
+  "keywords": [
+    "docx",
+    "word",
+    "ooxml",
+    "openxml",
+    "wordprocessingml",
+    "merge",
+    "compose",
+    "append-document",
+    "headers-footers",
+    "template",
+    "typescript"
+  ],
+  "homepage": "https://github.com/lamberto15/turboword#readme",
+  "bugs": {
+    "url": "https://github.com/lamberto15/turboword/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lamberto15/turboword.git"
+  },
+  "author": "turboword contributors",
+  "license": "MIT OR Apache-2.0",
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=22"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./compose": {
+      "import": {
+        "types": "./dist/compose.d.ts",
+        "default": "./dist/compose.js"
+      },
+      "require": {
+        "types": "./dist/compose.d.cts",
+        "default": "./dist/compose.cjs"
+      }
+    },
+    "./fields": {
+      "import": {
+        "types": "./dist/fields.d.ts",
+        "default": "./dist/fields.js"
+      },
+      "require": {
+        "types": "./dist/fields.d.cts",
+        "default": "./dist/fields.cjs"
+      }
+    },
+    "./forms": {
+      "import": {
+        "types": "./dist/forms.d.ts",
+        "default": "./dist/forms.js"
+      },
+      "require": {
+        "types": "./dist/forms.d.cts",
+        "default": "./dist/forms.cjs"
+      }
+    },
+    "./crypto": {
+      "import": {
+        "types": "./dist/crypto.d.ts",
+        "default": "./dist/crypto.js"
+      },
+      "require": {
+        "types": "./dist/crypto.d.cts",
+        "default": "./dist/crypto.cjs"
+      }
+    },
+    "./layout": {
+      "import": {
+        "types": "./dist/layout.d.ts",
+        "default": "./dist/layout.js"
+      },
+      "require": {
+        "types": "./dist/layout.d.cts",
+        "default": "./dist/layout.cjs"
+      }
+    },
+    "./pdf": {
+      "import": {
+        "types": "./dist/pdf.d.ts",
+        "default": "./dist/pdf.js"
+      },
+      "require": {
+        "types": "./dist/pdf.d.cts",
+        "default": "./dist/pdf.cjs"
+      }
+    },
+    "./svg": {
+      "import": {
+        "types": "./dist/svg.d.ts",
+        "default": "./dist/svg.js"
+      },
+      "require": {
+        "types": "./dist/svg.d.cts",
+        "default": "./dist/svg.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "compose": [
+        "dist/compose.d.ts"
+      ],
+      "fields": [
+        "dist/fields.d.ts"
+      ],
+      "forms": [
+        "dist/forms.d.ts"
+      ],
+      "crypto": [
+        "dist/crypto.d.ts"
+      ],
+      "layout": [
+        "dist/layout.d.ts"
+      ],
+      "pdf": [
+        "dist/pdf.d.ts"
+      ],
+      "svg": [
+        "dist/svg.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE-MIT",
+    "LICENSE-APACHE",
+    "NOTICE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "check:dts": "tsc -p tsconfig.dts.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "verify": "pnpm run typecheck && pnpm run lint && pnpm test && pnpm run build && pnpm run check:dts",
+    "check:package": "publint --strict && attw --pack . && pnpm pack --dry-run --json | node .github/scripts/check-pack.mjs",
+    "smoke": "node .github/scripts/smoke-dist.mjs test/fixtures",
+    "bench": "vitest bench --run",
+    "size": "size-limit",
+    "changeset": "changeset",
+    "release": "changeset publish",
+    "prepublishOnly": "pnpm run verify"
+  },
+  "dependencies": {
+    "fflate": "^0.8.3"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.5",
+    "@biomejs/biome": "2.6.4",
+    "@changesets/cli": "3.0.3",
+    "@size-limit/preset-small-lib": "14.3.0",
+    "@types/node": "^22.20.5",
+    "@xmldom/xmldom": "^0.9.8",
+    "publint": "0.3.25",
+    "size-limit": "14.3.0",
+    "tinybench": "^3.1.1",
+    "tsdown": "^0.23.4",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  },
+  "size-limit": [
+    {
+      "name": "open+save",
+      "path": "dist/index.js",
+      "import": "{ readDocx, writeDocx }",
+      "limit": "27 KB"
+    },
+    {
+      "name": "everything",
+      "path": "dist/index.js",
+      "import": "*",
+      "limit": "75 KB"
+    },
+    {
+      "name": "compose",
+      "path": "dist/compose.js",
+      "import": "*",
+      "limit": "30 KB"
+    },
+    {
+      "name": "fields",
+      "path": "dist/fields.js",
+      "import": "*",
+      "limit": "25 KB"
+    },
+    {
+      "name": "forms",
+      "path": "dist/forms.js",
+      "import": "*",
+      "limit": "10 KB"
+    },
+    {
+      "name": "crypto",
+      "path": "dist/crypto.js",
+      "import": "*",
+      "limit": "8 KB"
+    },
+    {
+      "name": "layout",
+      "path": "dist/layout.js",
+      "import": "*",
+      "limit": "110 KB"
+    },
+    {
+      "name": "pdf",
+      "path": "dist/pdf.js",
+      "import": "*",
+      "limit": "45 KB"
+    },
+    {
+      "name": "svg",
+      "path": "dist/svg.js",
+      "import": "*",
+      "limit": "8 KB"
+    }
+  ],
+  "packageManager": "pnpm@12.16.1"
+}
