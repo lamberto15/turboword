@@ -66,8 +66,26 @@ function alignmentOf(p: IRParagraph): { body: LineAlign; last: LineAlign } {
   }
 }
 
+/** Optional constraints of {@link layoutParagraph}. */
+export interface ParagraphOptions {
+  /**
+   * Extra points kept free on the physical left and right of line `line` (0-based), on top of
+   * the paragraph's indents (text wrapping beside square floats). Lines are filled, aligned,
+   * justified and tab-aligned within the narrowed box; tab stops stay measured from the indent
+   * origin. Item coordinates keep their usual origin (column edge + indentLeft), so a left
+   * inset of 40 moves that line's items 40 pt to the right. In RTL paragraphs `right` is the
+   * start side.
+   */
+  insets?: (line: number) => { left: number; right: number };
+}
+
 /** Breaks a paragraph into lines for a column of `width` points (tabs, justification, indents, line spacing, inline images/math/drawings). */
-export function layoutParagraph(p: IRParagraph, width: number, env: LayoutEnv): ParagraphLayout {
+export function layoutParagraph(
+  p: IRParagraph,
+  width: number,
+  env: LayoutEnv,
+  o?: ParagraphOptions,
+): ParagraphLayout {
   const props = p.props;
   const extras = paragraphExtras(p);
   const rtl = props.bidi;
@@ -87,10 +105,19 @@ export function layoutParagraph(p: IRParagraph, width: number, env: LayoutEnv): 
 
   // ---- geometry and tabs ---------------------------------------------------------------------
   const end = width - endIndent;
-  const geometry = (line: number): { start: number; end: number } => ({
-    start: startIndent + (line === 0 ? firstOffset : 0),
-    end,
-  });
+  const insets = o?.insets;
+  const geometries: { start: number; end: number }[] = [];
+  const geometry = (line: number): { start: number; end: number } => {
+    let g = geometries[line];
+    if (g === undefined) {
+      const ins = insets?.(line);
+      const atStart = ins === undefined ? 0 : Math.max(0, rtl ? ins.right : ins.left);
+      const atEnd = ins === undefined ? 0 : Math.max(0, rtl ? ins.left : ins.right);
+      g = { start: startIndent + (line === 0 ? firstOffset : 0) + atStart, end: end - atEnd };
+      geometries[line] = g;
+    }
+    return g;
+  };
   const stops = new TabStops(
     props.tabs.map((t) => {
       const s: { pos: number; val: typeof t.val; leader?: NonNullable<typeof t.leader> } = {

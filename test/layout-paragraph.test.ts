@@ -754,6 +754,91 @@ describe('layoutParagraph: real test fonts', () => {
   });
 });
 
+// ---- per-line insets (wrapping beside floats) -----------------------------------------------------
+
+describe('layoutParagraph: per-line insets', () => {
+  const words = 'aaaa bbbb cccc dddd eeee ffff';
+
+  it('narrows each line by its own insets; items move with a left inset', () => {
+    // Line 0: 20 pt free on the left (box 40 pt), line 1: 20 pt on the right, then none.
+    const insets = (line: number) =>
+      line === 0
+        ? { left: 20, right: 0 }
+        : line === 1
+          ? { left: 0, right: 20 }
+          : { left: 0, right: 0 };
+    const pl = layoutParagraph(para([words]), 60, env(), { insets });
+    expect(pl.lines.map(lineText)).toEqual(['aaaa ', 'bbbb ', 'cccc dddd ', 'eeee ffff']);
+    expect(texts(pl.lines[0]!)[0]!.x).toBeCloseTo(20);
+    expect(texts(pl.lines[1]!)[0]!.x).toBeCloseTo(0);
+    expect(pl.lines[0]!.width).toBeCloseTo(40);
+    // Without the option nothing changes.
+    expect(lay(para([words]), 60).lines.map(lineText)).toEqual([
+      'aaaa bbbb ',
+      'cccc dddd ',
+      'eeee ffff',
+    ]);
+    expect(layoutParagraph(para([words]), 60, env(), {}).lines.map(lineText)).toEqual([
+      'aaaa bbbb ',
+      'cccc dddd ',
+      'eeee ffff',
+    ]);
+  });
+
+  it('insets add to indents and the first-line indent', () => {
+    const p = para([words], { indent: { left: 200, right: 0, firstLine: 200, hanging: 0 } });
+    const pl = layoutParagraph(p, 80, env(), { insets: () => ({ left: 10, right: 5 }) });
+    // Box: 80 - 10 (indent) - 10 - 5 = 55 pt; the first line is 10 pt narrower (45 pt).
+    expect(texts(pl.lines[0]!)[0]!.x).toBeCloseTo(20);
+    expect(texts(pl.lines[1]!)[0]!.x).toBeCloseTo(10);
+    expect(pl.lines.map(lineText)).toEqual(['aaaa bbbb ', 'cccc dddd ', 'eeee ffff']);
+    const narrow = layoutParagraph(p, 80, env(), { insets: () => ({ left: 15, right: 5 }) });
+    expect(narrow.lines.map(lineText)).toEqual(['aaaa ', 'bbbb cccc ', 'dddd eeee ', 'ffff']);
+  });
+
+  it('centres, right-aligns and justifies within the narrowed box', () => {
+    const ins = { insets: () => ({ left: 20, right: 10 }) };
+    expect(
+      texts(layoutParagraph(para(['aaaa'], { alignment: 'center' }), 100, env(), ins).lines[0]!)[0]!
+        .x,
+    ).toBeCloseTo(20 + 25);
+    expect(
+      texts(layoutParagraph(para(['aaaa'], { alignment: 'right' }), 100, env(), ins).lines[0]!)[0]!
+        .x,
+    ).toBeCloseTo(70);
+    const just = layoutParagraph(para([words], { alignment: 'both' }), 90, env(), ins);
+    // Box 60 pt: "aaaa bbbb" justified to end at 80.
+    expect(xOf(just.lines[0]!, 'a')).toBeCloseTo(20);
+    expect(xOf(just.lines[0]!, 'b')).toBeCloseTo(60);
+    expect(just.lines[0]!.width).toBeCloseTo(80);
+  });
+
+  it('tab stops stay measured from the indent origin', () => {
+    const pl = layoutParagraph(
+      para(['a', TAB, 'b'], { tabs: [{ pos: 1000, val: 'left' }] }),
+      200,
+      env(),
+      {
+        insets: () => ({ left: 30, right: 0 }),
+      },
+    );
+    expect(xOf(pl.lines[0]!, 'a')).toBeCloseTo(30);
+    expect(xOf(pl.lines[0]!, 'b')).toBeCloseTo(50);
+  });
+
+  it('bidi paragraphs: the right inset is the start side', () => {
+    const pl = layoutParagraph(para(['aaaa'], { bidi: true }), 100, env(), {
+      insets: () => ({ left: 10, right: 30 }),
+    });
+    // Start-aligned RTL text ends at the right edge minus the right inset.
+    expect(texts(pl.lines[0]!)[0]!.x).toBeCloseTo(100 - 30 - 20);
+    const end = layoutParagraph(para(['aaaa'], { bidi: true, alignment: 'right' }), 100, env(), {
+      insets: () => ({ left: 10, right: 30 }),
+    });
+    expect(texts(end.lines[0]!)[0]!.x).toBeCloseTo(10);
+  });
+});
+
 // ---- every fixture paragraph -----------------------------------------------------------------
 
 describe('layoutParagraph: the fixture corpus', () => {
