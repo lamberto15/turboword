@@ -1,0 +1,150 @@
+{
+  "apache-poi/bug69628.docx": {
+    "pages": 1,
+    "application": "LibreOffice/25.2.1.2$MacOSX_AARCH64 LibreOffice_project/d3abf4aee5fd705e4a92bba33a32f40bc4e56f49",
+    "features": [
+      "libreoffice",
+      "numbering",
+      "table",
+      "zip-data-descriptor",
+      "content-types-last"
+    ]
+  },
+  "apache-poi/delins.docx": {
+    "pages": 1,
+    "application": "Microsoft Office Word",
+    "features": [
+      "tracked-changes",
+      "format-changes",
+      "numbering",
+      "fields",
+      "hyperlink",
+      "custom-xml"
+    ]
+  },
+  "apache-poi/libreoffice-comment.docx": {
+    "pages": 1,
+    "application": "LibreOffice/6.0.7.3$Linux_X86_64 LibreOffice_project/00m0$Build-3",
+    "features": ["libreoffice", "comments", "zip-data-descriptor", "content-types-last"]
+  },
+  "apache-poi/shapes-with-text.docx": {
+    "pages": 1,
+    "application": "Microsoft Office Word",
+    "features": ["textbox", "shapes", "group-shapes", "mc-alternate-content", "vml"]
+  },
+  "docx-mailmerge/test_footnote_header_footer.docx": {
+    "pages": 3,
+    "application": "Microsoft Office Word",
+    "features": [
+      "header-default",
+      "header-first",
+      "header-even",
+      "footer-default",
+      "footer-first",
+      "footer-even",
+      "title-page",
+      "even-and-odd-headers",
+      "footnotes",
+      "fields",
+      "fld-simple",
+      "mergefield",
+      "bookmarks",
+      "custom-xml",
+      "last-rendered-page-break"
+    ]
+  },
+  "docxcompose/content_controls.docx": {
+    "pages": 1,
+    "application": "Microsoft Office Word",
+    "features": ["content-controls", "glossary", "bookmarks"]
+  },
+  "docxcompose/docproperties_header_footer_3_sections.docx": {
+    "pages": 2,
+    "application": "Microsoft Office Word",
+    "features": [
+      "sections",
+      "header-default",
+      "header-first",
+      "header-even",
+      "footer-default",
+      "footer-first",
+      "footer-even",
+      "fields",
+      "docproperty",
+      "custom-properties",
+      "last-rendered-page-break"
+    ]
+  },
+  "docxcompose/header_with_image.docx": {
+    "pages": 1,
+    "application": "Microsoft Office Word",
+    "features": ["header-default", "header-image", "image", "zip-stored-entries"]
+  },
+  "docxcompose/numberings.docx": {
+    "pages": 1,
+    "application": "Microsoft Macintosh Word",
+    "features": ["numbering", "multilevel-list", "bookmarks", "thumbnail", "zip-stored-entries"]
+  },
+  "docxcompose/smart_art.docx": {
+    "pages": 1,
+    "application": "Microsoft Office Word",
+    "features": ["smartart", "drawing"]
+  },
+  "open-xml-sdk/TOC2.docx": {
+    "pages": 1,
+    "application": "Microsoft Office Word",
+    "features": ["toc", "fields", "pageref", "hyperlink", "bookmarks", "cjk-text", "custom-xml"]
+  },
+  "open-xml-sdk/TableFntEdnt.docx": {
+    "pages": 1,
+    "application": "Microsoft Office Word",
+    "features": ["table", "footnotes", "endnotes", "custom-xml"]
+  },
+  "open-xml-sdk/strict-CommentRangeStart.docx": {
+    "pages": 1,
+    "application": "Microsoft Office Word",
+    "features": ["strict", "comments", "bookmarks", "xml-bom"]
+  },
+  "open-xml-sdk/strict-footer-bookmarkStart.docx": {
+    "pages": 1,
+    "application": "Microsoft Office Word",
+    "features": [
+      "strict",
+      "header-default",
+      "header-first",
+      "header-even",
+      "footer-default",
+      "footer-first",
+      "footer-even",
+      "bookmarks",
+      "xml-bom"
+    ]
+  },
+  "python-docx/comments-rich-para.docx": {
+    "pages": 1,
+    "application": "Microsoft Office Word",
+    "features": [
+      "comments",
+      "comments-extended",
+      "comments-ids",
+      "comment-image",
+      "hyperlink",
+      "image",
+      "bookmarks",
+      "zip-stored-entries"
+    ]
+  },
+  "python-docx/tbl-cell-access.docx": {
+    "pages": 1,
+    "application": "Microsoft Macintosh Word",
+    "features": [
+      "table",
+      "merged-cells",
+      "grid-span",
+      "v-merge",
+      "bookmarks",
+      "thumbnail",
+      "zip-stored-entries"
+    ]
+  }
+}
