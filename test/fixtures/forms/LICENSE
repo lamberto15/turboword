@@ -1,0 +1,14 @@
+Content-control and form-field fixtures (test data only, not part of the npm package).
+
+Every .docx below this folder is copied byte for byte from a permissively licensed project, one
+subfolder per project, each with that project's licence text next to the files:
+
+  docx4j/        plutext/docx4j @ 836eab29ea8b47536ba9320e9bdf3da434de1d2f
+                 Apache License 2.0 (docx4j/LICENSE, docx4j/NOTICE)
+  open-xml-sdk/  dotnet/Open-XML-SDK @ 431ab05cf160248cc3885a4a766026d4f8243792
+                 MIT License (open-xml-sdk/LICENSE)
+  apache-poi/    apache/poi @ 47dcff769bb395034dddfd59c4609659b6dbc6a4
+                 Apache License 2.0 (apache-poi/LICENSE, apache-poi/NOTICE)
+
+The files sit one level down so the round-trip corpus (test/fixtures/<source>/*.docx) does not
+pick them up; test/forms*.test.ts reads them directly.
