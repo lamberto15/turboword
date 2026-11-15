@@ -1,0 +1,9 @@
+﻿P01 Labels: K0-n is list K (abstractNum 120, through w:num 120 or 121); L0-n is list L (abstractNum 122, through w:num 122); M0-n is w:num 123's overriding level 0 on list L.
+    K0-1 P02 KFirst (w:num 120)
+    K0-2 P03 KSecond (w:num 121, same abstractNum)
+    K0-3 P04 KFirst (w:num 120)
+    K0-4 P05 KSecond (w:num 121, same abstractNum)
+    L0-1 P06 LFirst (w:num 122)
+    M0-2 P07 LSecond (w:num 123, overriding level 0)
+    L0-3 P08 LFirst (w:num 122)
+    M0-4 P09 LSecond (w:num 123, overriding level 0)

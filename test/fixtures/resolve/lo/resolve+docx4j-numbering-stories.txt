@@ -1,0 +1,11 @@
+﻿P01 Every numbered paragraph in this document uses w:num 70.
+    1. P02 body item
+    2. P03 body item
+    3. P04 body item
+P11 Two footnotes1 and2
+P15 An endnotei
+P19 A comment
+P23 A text box: 
+    4. P24 body item after the notes
+    5. P25 body item after the notes
+    6. P26 body item after the notes

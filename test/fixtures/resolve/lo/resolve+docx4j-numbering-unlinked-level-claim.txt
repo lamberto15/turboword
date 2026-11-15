@@ -1,0 +1,27 @@
+﻿P01 Labels: D0-n is list D, E0-n list E, and so on; each list's two styles carry its w:numPr with no w:ilvl, and none of its levels names a style.
+    D0-1 P02 DAlpha
+    D0-2 P03 DZebra
+    D0-3 P04 DAlpha
+    D0-4 P05 DZebra
+    E0-1 P06 EZebra
+    E0-2 P07 EAlpha
+    E0-3 P08 EZebra
+    E0-4 P09 EAlpha
+    F0-1 P10 FZebra
+    F0-2 P11 FAlpha
+    F0-3 P12 FZebra
+    F0-4 P13 FAlpha
+    G0-1 P14 GZebra (GAlphaUnused, first in styles.xml, is used by no paragraph)
+    G0-2 P15 GZebra (GAlphaUnused, first in styles.xml, is used by no paragraph)
+    H0-1 P16 HBase
+    H0-2 P17 HDerived (based on HBase, the same w:numPr)
+    H0-3 P18 HBase
+    H0-4 P19 HDerived (based on HBase, the same w:numPr)
+    I0-1 P20 IOwner
+    I0-2 P21 IOther. This paragraph is long enough to wrap, so the golden shows where its second line starts: at the margin, or at 36pt, the level's indent.
+    I0-3 P22 IOwner
+    J0-1 P23 JLinked
+P24 OtherIlvl1B (w:num 116, ilvl 1; level 1 names no style)
+        J1-1 P25 OtherIlvl1 (w:num 116, ilvl 1; level 1 names no style)
+P26 OtherIlvl1B (w:num 116, ilvl 1; level 1 names no style)
+        J1-2 P27 OtherIlvl1 (w:num 116, ilvl 1; level 1 names no style)

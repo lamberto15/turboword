@@ -1,0 +1,12 @@
+﻿| Left is here
+|	|	|
+    1. None   Some content, .  Some content, .  Some content, .  Some content, .  Some content, .  Some content, .  Some content, .  Some content,
+
+    2. First line.  Some content, .  Some content, .  Some content, .  Some content, .  Some content, .  Some content, .  Some content, .  Some content, 
+
+
+    3. 0.75    Some content, .  Some content, .  Some content, .  Some content, .  Some content, .  Some content, .  Some content, .  Some content,
+
+
+    4. Hanging.  Some content, .  Some content, .  Some content, .  Some content, .  Some content, .  Some content, .  Some content, .  Some content,
+

@@ -1,0 +1,107 @@
+﻿SharePoint 2010 exposes list data via OData.  This post contains four super-small code snippets that show how to Create, Read, Update, and Delete items in a SharePoint list using the OData Rest API.
+This post is one in a series on using the OData REST API to access SharePoint 2010 list data.
+    1. Getting Started using the OData REST API to Query a SharePoint List 
+    2. Using the OData Rest API for CRUD Operations on a SharePoint List 
+These snippets work as written with the 2010 Information Worker Demonstration and Evaluation Virtual Machine.  That VM is a great way to try out SharePoint 2010 development.  Also see How to Install and Activate the IW Demo/Evaluation Hyper-V Machine.
+See the first post in this series, Getting Started using the OData REST API to Query a SharePoint List, for detailed instructions on how to build an application that uses OData to query a list.  These snippets use the list that I describe how to build in that post.
+Query a List
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using Gears.Data;
+ 
+class Program
+{
+    static void Main(string[] args)
+    {
+        // query
+        TeamSiteDataContext dc =
+            new TeamSiteDataContext(new Uri("http://intranet/_vti_bin/listdata.svc"));
+        dc.Credentials = CredentialCache.DefaultNetworkCredentials;
+        var result = from d in dc.Inventory
+                     select new
+                     {
+                         Title = d.Title,
+                         Description = d.Description,
+                         Cost = d.Cost,
+                     };
+        foreach (var d in result)
+            Console.WriteLine(d);
+    }
+}
+ 
+Create an Item
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using Gears.Data;
+ 
+class Program
+{
+    static void Main(string[] args)
+    {
+        // create item
+        TeamSiteDataContext dc =
+            new TeamSiteDataContext(new Uri("http://intranet/_vti_bin/listdata.svc"));
+        dc.Credentials = CredentialCache.DefaultNetworkCredentials;
+        InventoryItem newItem = new InventoryItem();
+        newItem.Title = "Boat";
+        newItem.Description = "Little Yellow Boat";
+        newItem.Cost = 300;
+        dc.AddToInventory(newItem);
+        dc.SaveChanges();
+    }
+}
+ 
+Update an Item
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using Gears.Data;
+ 
+class Program
+{
+    static void Main(string[] args)
+    {
+        // update item
+        TeamSiteDataContext dc =
+            new TeamSiteDataContext(new Uri("http://intranet/_vti_bin/listdata.svc"));
+        dc.Credentials = CredentialCache.DefaultNetworkCredentials;
+        InventoryItem item = dc.Inventory
+            .Where(i => i.Title == "Car")
+            .FirstOrDefault();
+        item.Title = "Car";
+        item.Description = "Super Fast Car";
+        item.Cost = 500;
+        dc.UpdateObject(item);
+        dc.SaveChanges();
+    }
+}
+ 
+Delete an Item
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using Gears.Data;
+ 
+class Program
+{
+    static void Main(string[] args)
+    {
+        // delete item
+        TeamSiteDataContext dc =
+            new TeamSiteDataContext(new Uri("http://intranet/_vti_bin/listdata.svc"));
+        dc.Credentials = CredentialCache.DefaultNetworkCredentials;
+        InventoryItem item = dc.Inventory
+            .Where(i => i.Title == "Car")
+            .FirstOrDefault();
+        dc.DeleteObject(item);
+        dc.SaveChanges();
+    }
+}
+ 
+

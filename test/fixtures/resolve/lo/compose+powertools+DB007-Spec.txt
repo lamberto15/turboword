@@ -1,0 +1,75 @@
+﻿Foreword
+Changes from the 1st edition were made to align this 2nd edition Standard with ISO/IEC 29500:2008. Both this 2nd edition and ISO/IEC 29500:2008 refer to the 1st edition. As such, this 2nd edition does not cancel or replace the 1st edition.
+
+ECMA-376 consists of the following parts:
+
+Part 1: Fundamentals and Markup Language Reference
+Part 2: Open Packaging Conventions
+Part 3: Markup Compatibility and Extensibility
+Part 4: Transitional Migration Features
+
+Annexes A and B are for information only.
+
+Introduction
+ECMA-376 specifies a family of XML schemas, collectively called Office Open XML, which define the XML vocabularies for word-processing, spreadsheet, and presentation documents, as well as the packaging of documents that conform to these schemas.
+
+The goal is to enable the implementation of the Office Open XML formats by the widest set of tools and platforms, fostering interoperability across office productivity applications and line-of-business systems, as well as to support and strengthen document archival and preservation, all in a way that is fully compatible with the existing corpus of Microsoft Office documents.
+
+The following organizations have participated in the creation of ECMA-376 and their contributions are
+gratefully acknowledged:
+
+Apple, Barclays Capital, BP, The British Library, Essilor, Intel, Microsoft, NextPage, Novell, Statoil, Toshiba, and the United States Library of Congress
+
+1. Scope
+This Part of ECMA-376 describes a set of conventions that are used by Office Open XML documents to clearly mark elements and attributes introduced by future versions or extensions of Office Open XML documents, while providing a method by which consumers can obtain a baseline version of the Office Open XML document (a version without extensions) for interoperability.
+
+2. Conformance
+The text in this Part of ECMA-376 is divided into normative and informative categories. Unless documented otherwise, any feature shall be implemented as specified by the normative text describing that feature in this Part of ECMA-376. Text marked informative (using the mechanisms described in §7) is for information purposes only. Unless stated otherwise, all text is normative.
+
+Use of the word “shall” indicates required behavior.
+
+Any behavior that is not explicitly specified by this Part of ECMA-376 is implicitly unspecified (Part 1, §4). Each Part of this multi-part standard has its own conformance clause. The term conformance class is used to disambiguate conformance within different Parts of this multi-part standard. This Part of ECMA-376 has only one conformance class, MCE (that is, Markup Compatibility and Extensibility). As such, conformance to that class implies conformance to the whole Part.
+
+2.1 Document Conformance
+A document has conformance class MCE if it satisfies the syntax constraints on elements and attributes defined in this Part of ECMA-376. Document conformance to this Part of ECMA-376 is purely syntactic.
+
+2.2 Application Conformance
+An application implementing this Part of ECMA-376 has conformance class MCE if any one of the following is true:
+    • The application is a markup consumer that does not reject any documents of conformance class MCE; or
+    • The application is a markup producer that is able to produce documents of conformance class MCE; or
+    • The application is a markup editor that does not reject any documents of conformance class MCE, and is able to produce documents of conformance class MCE.
+
+Application conformance to this Part of ECMA-376 is purely syntactic.
+
+[Note: Application conformance to this Part of ECMA-376 cannot be based on semantics, since the semantics depend on the choice of application-defined extension elements. end note]
+
+3. Normative References
+The following referenced documents are indispensable for the application of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.
+
+ISO/IEC 2382-1:1993, Information technology — Vocabulary — Part 1: Fundamental terms.
+
+ISO/IEC 10646:2003, Information technology — Universal Multiple-Octet Coded Character Set (UCS).
+
+ISO/IEC 19757-4:2006, Information technology — Document Schema Definition Languages (DSDL) — Part 4: Namespace-based Validation Dispatching Language (NVDL).
+
+RFC 3986 Uniform Resource Identifier (URI): Generic Syntax, The Internet Society, Berners-Lee, T., R. Fielding, and L. Masinter, 2005, http://www.ietf.org/rfc/rfc3986.txt.
+
+RFC 4234 Augmented BNF for Syntax Specifications: ABNF, The Internet Society, Crocker, D., P. Overell, 2005, http://www.ietf.org/rfc/rfc4234.txt
+
+The Unicode Standard, 5th edition, The Unicode Consortium, Addison-Wesley Professional, ISBN 0321480910, http://www.unicode.org/unicode/standard.
+
+XML, Tim Bray, Eve Maler, Jean Paoli, C. M. Sperberg-McQueen, John Cowan, and François Yergeau (editors). Extensible Markup Language (XML) 1.1, Third Edition. World Wide Web Consortium. 2004. http://www.w3.org/TR/2004/REC-xml11-20040204/
+
+XML Base, Marsh, Jonathan. XML Base. World Wide Web Consortium. 2001. http://www.w3.org/TR/2001/RECxmlbase-
+20010627/
+
+XML Namespaces, Tim Bray, Dave Hollander, Andrew Layman, and Richard Tobin (editors). Namespaces in XML 1.1 (Second Edition). World Wide Web Consortium. 2006. http://www.w3.org/TR/2006/REC-xml-names11-20060816/
+
+XML Schema Part 0: Primer (Second Edition), W3C Recommendation 28 October 2004,
+http://www.w3.org/TR/xmlschema-0/
+
+XML Schema Part 1: Structures (Second Edition), W3C Recommendation 28 October 2004,
+http://www.w3.org/TR/xmlschema-1/
+
+XML Schema Part 2: Datatypes (Second Edition), W3C Recommendation 28 October 2004,
+http://www.w3.org/TR/xmlschema-2/

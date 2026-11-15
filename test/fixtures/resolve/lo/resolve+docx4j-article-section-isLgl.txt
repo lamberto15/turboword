@@ -1,0 +1,8 @@
+﻿Article I. [expect]Article I.[/expect]Name and Purpose
+Section 1.01 [expect]Section 1.01[/expect]Name  name  name name  name  name  name  name  name  name  name  name  name  
+(a) [expect](a)[/expect]Blagh  blagh blagh blagh blagh blagh blagh blagh blagh blagh blagh blagh blagh blagh blagh blagh blagh blagh blagh
+
+Article II. [expect]Article II.[/expect]Another article
+Section 2.01 [expect]Section 2.01[/expect]Another section
+(a) [expect](a)[/expect]Blagh
+

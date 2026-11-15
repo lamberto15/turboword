@@ -1,0 +1,8 @@
+﻿In this document, the numbering is provided by the styles, but for level 2 (ie style Legal2L2) and 3, the w:numId is missing.  You have to follow the basedOn to get the w:numId!
+
+    Section 1. GENERAL.  
+        1.1 Blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+            (a) blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah 
+    Section 2. OTHER.  
+        2.1 blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+        2.2 blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah

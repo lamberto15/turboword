@@ -1,0 +1,16 @@
+﻿This document tests that the calculated effective indentation for each paragraph matches the value given in the text.
+    1. <w:ind [expect]w:left="360"[/expect] [expect]w:hanging="360"[/expect] >
+    2. <w:ind [expect]w:left="360"[/expect] [expect]w:hanging="360"[/expect] >
+        a. <w:ind [expect]w:left="1080"[/expect] [expect]w:hanging="360"[/expect] >
+
+-------------------------
+
+    1. <w:ind [expect]w:left="0"[/expect] [expect]w:firstLine="0"[/expect] >
+    2. <w:ind [expect]w:left="0"[/expect] [expect]w:firstLine="0"[/expect] >
+        a. <w:ind [expect]w:left="1440"[/expect] [expect]w:hanging="360"[/expect] >
+
+-----------------------------
+
+    1) <w:ind [expect]w:left="0"[/expect] [expect]w:firstLine="0"[/expect] >
+        a) <w:ind [expect]w:left="357"[/expect] [expect]w:firstLine="3"[/expect] >
+

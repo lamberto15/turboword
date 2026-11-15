@@ -1,0 +1,25 @@
+﻿P01 Labels: A0-n is list A level 0 (linked to LinkA), A1-n level 1 (unlinked), A2-n level 2 (LinkL2), A3-n level 3 (LinkL3); C0-n list C (unlinked).
+    A0-1 P02 OtherNoIlvl (w:num 100, no ilvl), before any LinkA
+    A0-2 P03 LinkA
+    A0-3 P04 OtherNoIlvl (w:num 100, no ilvl)
+    A0-4 P05 LinkA
+P06 OtherIlvl0 (w:num 100, ilvl 0)
+    A0-5 P07 LinkA
+        A1-1 P08 OtherIlvl1 (w:num 100, ilvl 1, level 1 unlinked)
+    A0-6 P09 LinkA
+    A0-7 P10 DerivedA (based on LinkA, no w:numPr of its own)
+    A0-8 P11 LinkA
+    A0-9 P12 OtherInst (w:num 101, a second w:num on list A)
+    A0-10 P13 LinkA
+P14 LinkL2 (w:num 100, ilvl 0; level 2 names it)
+    A0-11 P15 LinkA
+    A0-12 P16 LinkL3 (w:num 100, no ilvl; level 3 names it)
+    A0-13 P17 LinkA
+    A0-14 P18 Plain, direct w:numPr 100 ilvl 0
+    A0-15 P19 OtherNoIlvl, direct w:numPr 100 ilvl 0
+    A0-16 P20 OtherNoIlvl, direct w:numPr 100, no ilvl
+    A0-17 P21 LinkA
+    C0-1 P22 FirstC (w:num 102, no ilvl)
+    C0-2 P23 SecondC (w:num 102, no ilvl)
+    C0-3 P24 FirstC (w:num 102, no ilvl)
+    A0-18 P25 LinkA

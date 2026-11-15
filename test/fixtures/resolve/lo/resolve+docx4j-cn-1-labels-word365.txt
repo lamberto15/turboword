@@ -1,0 +1,180 @@
+﻿CR-074 clause-numbers probe, cn-1. Each numbered paragraph's id is bookmarked cn_<id>; the fields read ? until Word updates them.
+F0 before the lists: r: L1=1 L4=2 L5=2.01 L6=2.01(a) L7=2.01(a)(i)
+Case L: legal, 1. / 1.01 / (a) / (i), each level its own text, the levels above by %1.%2 at level 1 only
+    1. L1 level 0
+        1.01 L2 level 1
+        1.02 L3 level 1
+    2. L4 level 0
+        2.01 L5 level 1
+            (a) L6 level 2 r: L3=1.02 L5=2.01 L7=(i) L9=(b) L11=2.02(a)
+                (i) L7 level 3 r: L6=(a) L8=(ii) L9=(b) L11=2.02(a) L4=2
+                (ii) L8 level 3 r: L1=1 L2=1.01 L3=1.02 L4=2 L5=2.01 L6=(a) L7=(i) L8=(ii) L9=(b) L10=2.02 L11=2.02(a) L12=3
+            (b) L9 level 2 r: L1=1 L2=1.01 L3=1.02 L4=2 L5=2.01 L6=(a) L7=(a)(i) L8=(a)(ii) L9=(b) L10=2.02 L11=2.02(a) L12=3 w: L6=2.01(a) L7=2.01(a)(i) L11=2.02(a)
+        2.02 L10 level 1
+            (a) L11 level 2 r: L1=1 L2=1.01 L3=1.02 L4=2 L5=2.01 L6=2.01(a) L7=2.01(a)(i) L8=2.01(a)(ii) L9=2.01(b) L10=2.02 L11=(a) L12=3
+    3. L12 level 0 r: L1=1 L2=1.01 L3=1.02 L4=2 L5=2.01 L6=2.01(a) L7=2.01(a)(i) L8=2.01(a)(ii) L9=2.01(b) L10=2.02 L11=2.02(a) L12=3
+        3.01 L13 level 1, in a table cell r: L12=3 L6=2.01(a)
+After case L.
+Case O: Word's outline, 1. / a. / i., each level its own counter and a period
+    1. O1 level 0
+        a. O2 level 1 r: L6=2.01(a) L5=2.01 L4=2
+            i. O3 level 2
+            ii. O4 level 2 r: O1=1 O2=a O3=i O5=b O6=2 O7=2.a
+        b. O5 level 1
+    2. O6 level 0
+        a. O7 level 1 r: O1=1 O2=1.a O3=1.a.i O4=1.a.ii O5=1.b O6=2
+Case P: 1) / a) / i), each level its own counter and a parenthesis
+    1) P1 level 0
+        a) P2 level 1
+            i) P3 level 2
+            ii) P4 level 2 r: P1=1) P2=a) P3=i) P5=b) P6=2) P7=2)a)
+        b) P5 level 1
+    2) P6 level 0
+        a) P7 level 1 r: P1=1) P2=1)a) P3=1)a)i) P4=1)a)ii) P5=1)b) P6=2)
+Case H: 1. / 1.1. / 1.1.1., each level showing the levels above
+    1. H1 level 0
+        1.1. H2 level 1
+            1.1.1. H3 level 2
+            1.1.2. H4 level 2 r: H1=1 H2=1.1 H3=1.1.1 H5=1.2 H6=2 H7=2.1
+        1.2. H5 level 1
+    2. H6 level 0
+        2.1. H7 level 1 r: H1=1 H2=1.1 H3=1.1.1 H4=1.1.2 H5=1.2 H6=2
+Case A: headings linked to the list by their styles, Article I / Section 1.01 (legal) / (a)
+    Article I A1 Article heading
+        Section 1.01 A2 Section heading
+            (a) A3 clause
+            (b) A4 clause
+    Article II A5 Article heading
+        Section 2.01 A6 Section heading
+            (a) A7 clause r: A1=Article I A2=Section 1.01 A3=Section 1.01(a) A4=Section 1.01(b) A5=Article II A6=Section 2.01 A8=Section 2.02
+        Section 2.02 A8 Section heading r: A1=Article I A2=Section 1.01 A3=Section 1.01(a) A5=Article II A6=Section 2.01 A7=Section 2.01(a)
+Case Y: a list style (w:numStyleLink), 1. / 1.1
+    1. Y1 level 0
+        1.1 Y2 level 1
+    2. Y3 level 0
+        2.1 Y4 level 1 r: Y1=1 Y2=1.1 Y3=2
+Case G: legal numbering (w:isLgl) at level 1 under upper roman, I. / 1.1 / (a)
+    I. G1 level 0
+        1.1 G2 level 1
+            (a) G3 level 2
+    II. G4 level 0
+            (a) G5 level 2, level 1 skipped r: G1=I G2=1.1 G3=1.1(a) G4=II
+Case S: levels skipped, case L's definitions in a list of their own
+    1. S1 level 0
+            (a) S2 level 2, level 1 skipped
+                (i) S3 level 3
+        1.02 S4 level 1
+                (i) S5 level 3, level 2 skipped r: S1=1 S2=(a) S3=(a)(i) S4=1.02
+Case R: a list restarted (a second w:num, start override 1), so two paragraphs show 1.
+    1. R1 level 0
+        (a) R2 level 1
+    2. R3 level 0
+Between the two lists of case R.
+    1. R4 level 0, restarted
+        (a) R5 level 1 r: R1=1 R2=1(a) R3=2 R4=1
+Case M: words in the level text, Article I / 1. (no %1) / (a)
+    Article I M1 level 0
+        1. M2 level 1
+            (a) M3 level 2
+        2. M4 level 1
+    Article II M5 level 0 r: M1=Article I M2=Article I1 M3=Article I1(a) M4=Article I2
+Case N: not numbers: a bullet, Step 1: / a., NOTE (format none), an empty level text, 1 / 1-1 / A
+    • N1 a bullet
+    Step 1: N2 level 0
+        a. N3 level 1
+    NOTE N4 format none, text NOTE
+     N5 format none, empty text
+    1 N6 level 0
+        1-1 N7 level 1
+            A N8 level 2 r: N6=1 N7=1-1 N2=Step 1: N3=a
+Case T: tracked changes, T2 deleted, T3 inserted (all markup shown)
+    1. T1 level 0
+    2. T2 level 0, deleted
+        (a) T3 level 1, inserted
+    3. T4 level 0
+        (a) T5 level 1 r: T1=1 T2=1(a) T3=1(a) T4=2
+Edge cases: E1 a bookmark on a paragraph not numbered; E2 an empty bookmark before L10's id; E3 a bookmark from L6 into L7
+E1 not numbered
+Field lines: one a numbered paragraph, then the edge cases; w = \w, n = \n, r = \r, t = \t; L also \p, \r \p, \w \d "-"
+F-L1 w=1 n=1 r=1 wt=1 nt=1 rt=1
+F-L2 w=1.01 n=1.01 r=1.01 wt=1.01 nt=1.01 rt=1.01
+F-L3 w=1.02 n=1.02 r=1.02 wt=1.02 nt=1.02 rt=1.02
+F-L4 w=2 n=2 r=2 wt=2 nt=2 rt=2
+F-L5 w=2.01 n=2.01 r=2.01 wt=2.01 nt=2.01 rt=2.01
+F-L6 w=2.01(a) n=(a) r=2.01(a) wt=2.01(a) nt=(a) rt=2.01(a) p=above rp=2.01(a) above wd=2.01-(a) h=2.01(a)
+F-L7 w=2.01(a)(i) n=(i) r=2.01(a)(i) wt=2.01(a)(i) nt=(i) rt=2.01(a)(i)
+F-L8 w=2.01(a)(ii) n=(ii) r=2.01(a)(ii) wt=2.01(a)(ii) nt=(ii) rt=2.01(a)(ii)
+F-L9 w=2.01(b) n=(b) r=2.01(b) wt=2.01(b) nt=(b) rt=2.01(b) p=above rp=2.01(b) above wd=2.01-(b) h=2.01(b)
+F-L10 w=2.02 n=2.02 r=2.02 wt=2.02 nt=2.02 rt=2.02
+F-L11 w=2.02(a) n=(a) r=2.02(a) wt=2.02(a) nt=(a) rt=2.02(a)
+F-L12 w=3 n=3 r=3 wt=3 nt=3 rt=3
+F-L13 w=3.01 n=3.01 r=3.01 wt=3.01 nt=3.01 rt=3.01
+F-O1 w=1 n=1 r=1 wt=1 nt=1 rt=1
+F-O2 w=1.a n=a r=1.a wt=1.a nt=a rt=1.a
+F-O3 w=1.a.i n=i r=1.a.i wt=1.a.i nt=i rt=1.a.i
+F-O4 w=1.a.ii n=ii r=1.a.ii wt=1.a.ii nt=ii rt=1.a.ii
+F-O5 w=1.b n=b r=1.b wt=1.b nt=b rt=1.b
+F-O6 w=2 n=2 r=2 wt=2 nt=2 rt=2
+F-O7 w=2.a n=a r=a wt=2.a nt=a rt=a
+F-P1 w=1) n=1) r=1) wt=1) nt=1) rt=1)
+F-P2 w=1)a) n=a) r=1)a) wt=1)a) nt=a) rt=1)a)
+F-P3 w=1)a)i) n=i) r=1)a)i) wt=1)a)i) nt=i) rt=1)a)i)
+F-P4 w=1)a)ii) n=ii) r=1)a)ii) wt=1)a)ii) nt=ii) rt=1)a)ii)
+F-P5 w=1)b) n=b) r=1)b) wt=1)b) nt=b) rt=1)b)
+F-P6 w=2) n=2) r=2) wt=2) nt=2) rt=2)
+F-P7 w=2)a) n=a) r=a) wt=2)a) nt=a) rt=a)
+F-H1 w=1 n=1 r=1 wt=1 nt=1 rt=1
+F-H2 w=1.1 n=1.1 r=1.1 wt=1.1 nt=1.1 rt=1.1
+F-H3 w=1.1.1 n=1.1.1 r=1.1.1 wt=1.1.1 nt=1.1.1 rt=1.1.1
+F-H4 w=1.1.2 n=1.1.2 r=1.1.2 wt=1.1.2 nt=1.1.2 rt=1.1.2
+F-H5 w=1.2 n=1.2 r=1.2 wt=1.2 nt=1.2 rt=1.2
+F-H6 w=2 n=2 r=2 wt=2 nt=2 rt=2
+F-H7 w=2.1 n=2.1 r=2.1 wt=2.1 nt=2.1 rt=2.1
+F-A1 w=Article I n=Article I r=Article I wt=I nt=I rt=I
+F-A2 w=Section 1.01 n=Section 1.01 r=Section 1.01 wt=1.01 nt=1.01 rt=1.01
+F-A3 w=Section 1.01(a) n=(a) r=Section 1.01(a) wt=1.01(a) nt=(a) rt=1.01(a) p=above rp=Section 1.01(a) above wd=Section 1.01-(a) h=Section 1.01(a)
+F-A4 w=Section 1.01(b) n=(b) r=Section 1.01(b) wt=1.01(b) nt=(b) rt=1.01(b)
+F-A5 w=Article II n=Article II r=Article II wt=II nt=II rt=II
+F-A6 w=Section 2.01 n=Section 2.01 r=Section 2.01 wt=2.01 nt=2.01 rt=2.01
+F-A7 w=Section 2.01(a) n=(a) r=Section 2.01(a) wt=2.01(a) nt=(a) rt=2.01(a) p=above rp=Section 2.01(a) above wd=Section 2.01-(a) h=Section 2.01(a)
+F-A8 w=Section 2.02 n=Section 2.02 r=Section 2.02 wt=2.02 nt=2.02 rt=2.02
+F-Y1 w=1 n=1 r=1 wt=1 nt=1 rt=1
+F-Y2 w=1.1 n=1.1 r=1.1 wt=1.1 nt=1.1 rt=1.1
+F-Y3 w=2 n=2 r=2 wt=2 nt=2 rt=2
+F-Y4 w=2.1 n=2.1 r=2.1 wt=2.1 nt=2.1 rt=2.1
+F-G1 w=I n=I r=I wt=I nt=I rt=I
+F-G2 w=1.1 n=1.1 r=1.1 wt=1.1 nt=1.1 rt=1.1
+F-G3 w=1.1(a) n=(a) r=1.1(a) wt=1.1(a) nt=(a) rt=1.1(a)
+F-G4 w=II n=II r=II wt=II nt=II rt=II
+F-G5 w=II(a) n=(a) r=(a) wt=II(a) nt=(a) rt=(a)
+F-S1 w=1 n=1 r=1 wt=1 nt=1 rt=1
+F-S2 w=1(a) n=(a) r=(a) wt=1(a) nt=(a) rt=(a)
+F-S3 w=1(a)(i) n=(i) r=(a)(i) wt=1(a)(i) nt=(i) rt=(a)(i)
+F-S4 w=1.02 n=1.02 r=1.02 wt=1.02 nt=1.02 rt=1.02
+F-S5 w=1.02(i) n=(i) r=(i) wt=1.02(i) nt=(i) rt=(i)
+F-R1 w=1 n=1 r=1 wt=1 nt=1 rt=1
+F-R2 w=1(a) n=(a) r=1(a) wt=1(a) nt=(a) rt=1(a)
+F-R3 w=2 n=2 r=2 wt=2 nt=2 rt=2
+F-R4 w=1 n=1 r=1 wt=1 nt=1 rt=1
+F-R5 w=1(a) n=(a) r=(a) wt=1(a) nt=(a) rt=(a)
+F-M1 w=Article I n=Article I r=Article I wt=I nt=I rt=I
+F-M2 w=Article I1 n=1 r=Article I1 wt=I1 nt=1 rt=I1
+F-M3 w=Article I1(a) n=(a) r=Article I1(a) wt=I1(a) nt=(a) rt=I1(a)
+F-M4 w=Article I2 n=2 r=Article I2 wt=I2 nt=2 rt=I2
+F-M5 w=Article II n=Article II r=Article II wt=II nt=II rt=II
+F-N1 w= n= r= wt=0 nt=0 rt=0
+F-N2 w=Step 1: n=Step 1: r=Step 1: wt=1: nt=1: rt=1:
+F-N3 w=Step 1:a n=a r=a wt=1:a nt=a rt=a
+F-N4 w=NOTE n=NOTE r=NOTE wt=0 nt=0 rt=0
+F-N5 w=0 n=0 r=0 wt=0 nt=0 rt=0
+F-N6 w=1 n=1 r=1 wt=1 nt=1 rt=1
+F-N7 w=1-1 n=1-1 r=1-1 wt=1-1 nt=1-1 rt=1-1
+F-N8 w=1-1A n=A r=A wt=1-1A nt=A rt=A
+F-T1 w=1 n=1 r=1 wt=1 nt=1 rt=1
+F-T2 w=1(a) n=(a) r=1(a) wt=1(a) nt=(a) rt=1(a)
+F-T3 w=1(a) n=(a) r=1(a) wt=1(a) nt=(a) rt=1(a)
+F-T4 w=2 n=2 r=2 wt=2 nt=2 rt=2
+F-T5 w=2(a) n=(a) r=(a) wt=2(a) nt=(a) rt=(a)
+F-E1 w=0 n=0 r=0 wt=0 nt=0 rt=0
+F-E2 w=2.02 n=2.02 r=2.02 wt=2.02 nt=2.02 rt=2.02
+F-E3 w=2.01(a) n=(a) r=2.01(a) wt=2.01(a) nt=(a) rt=2.01(a)

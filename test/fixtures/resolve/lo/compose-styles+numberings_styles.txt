@@ -1,0 +1,9 @@
+﻿    1. List Item 1
+    2. List Item 2
+    3. List Item 3
+Paragraph, restart numbering
+    1. List Item 1
+    2. List Item 2
+Paragraph, continue numbering
+    3. List Item 3
+    4. List Item 4

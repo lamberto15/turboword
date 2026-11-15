@@ -1,0 +1,10 @@
+﻿This is a document for testing docx2python module.
+
+    1. Why did the chicken cross the road?
+        A. Just because
+        B. Don't know
+        C. To get to the other side
+    2. What's the meaning of life, universe and everything?
+        D. 42
+        E. 0
+        F. -1

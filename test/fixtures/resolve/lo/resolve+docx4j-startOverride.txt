@@ -1,0 +1,13 @@
+﻿    1) [expect]1)[/expect]A
+    2) [expect]2)[/expect]B
+    3) [expect]3)[/expect]C
+    4) [expect]4)[/expect]D
+    10) [expect]10)[/expect]Aa
+    11) [expect]11)[/expect]Inserted
+    12) [expect]12)[/expect]Bb
+    13) [expect]13)[/expect]Inserted [the first list again]
+    14) [expect]14)[/expect]Inserted
+    15) [expect]15)[/expect]Aa [the second list again]
+    16) [expect]16)[/expect]Inserted
+    17) [expect]17)[/expect]Bb
+

@@ -1,0 +1,47 @@
+﻿Eastern Arabic numbering
+By way of intro, see http://www.docx4java.org/forums/pdf-output-f27/arabic-number-digits-in-pdf-output-t1826.html
+"EASTERN Arabic" numerals in English: http://en.wikipedia.org/wiki/Eastern_Arabic_numerals or in Unicode, Arabic-Indic: http://stackoverflow.com/questions/1676 ... bic-digits
+There are 2 settings in Word (as opposed to the docx!):
+Use Native Digits = Context
+digit substitution ( Control Panel -> Region and Language -> Addtional Settings -> Use Native Digits ) as Context
+
+Numeral option	w:rtl	cs, no rtl	nothing	more context
+(with hint)	eastAsia
+=TNR	w:rFonts/@w:hint="cs"
+System	Eastern	Eastern	1234	1234	1234	1234
+Hindi	Eastern	Eastern	Eastern	Eastern	Eastern	Eastern
+Context	Eastern	Eastern	1234	1234	1234	1234*
+Arabic	1234	1234	1234	1234	1234	1234
+
+Use Native Digits = National
+digit substitution ( Control Panel -> Region and Language -> Addtional Settings -> Use Native Digits ) as National
+Numeral option	w:rtl	cs, no rtl	nothing	more context
+(with hint)	eastAsia
+=TNR	w:rFonts/@w:hint="cs"
+System	Eastern	Eastern	Eastern	Eastern	Eastern	Eastern
+Hindi	Eastern	Eastern	Eastern	Eastern	Eastern	Eastern
+Context	Eastern	Eastern	Eastern	Eastern	Eastern	Eastern
+Arabic	1234	1234	Eastern	Eastern	Eastern	Eastern
+
+Rules:
+If rtl or cs is present, use eastern numbering, unless numer option = arabic.  Return ie (If both rtl and the hint are present, do what rtl tells you.
+If Native Digit=National (and locale=??), use eastern
+else if =Context, use 1234 unless numeric=hindi
+
+
+  <w:themeFontLang w:val="it-IT" w:eastAsia="ko-KR" w:bidi="ar-SA"/>
+  <w:themeFontLang w:val="en-US" w:bidi="ar-SA"/>
+
+
+This stuff is implemented in RunFontSelector.
+Basic tests:
+    1. Native Digits=Context, Numeral option = System
+    2. Native Digits=National, Numeral option = Arabic
+
+Note: my test docx had Normal style set to include:
+    <w:pPr>
+      <w:bidi/>
+    </w:pPr>
+Haven't confirmed whether absence of that would make any difference...
+
+See test docx:  src\test\resources\multilingual\arabic
