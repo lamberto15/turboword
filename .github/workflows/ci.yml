@@ -1,0 +1,113 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main] # the repository's default branch
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  verify:
+    name: verify (${{ matrix.os }}, node ${{ matrix.node }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest] # Windows: paths in tests, CRLF, slower filesystem
+        node: [22, 24, 26] # supported LTS lines that satisfy engines.node >=22
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          node-version: ${{ matrix.node }}
+      - run: pnpm run verify
+
+  package:
+    name: package checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - run: pnpm run build
+      # publint --strict, attw (default profile: node10, node16 CJS/ESM and bundler, since the
+      # package ships ESM + CJS with main/types fallbacks) and the pack whitelist
+      - run: pnpm run check:package
+      - run: pnpm run size
+      - run: pnpm run smoke # dist under Node, ESM and CJS
+
+  bun:
+    name: smoke (bun)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - run: pnpm run build
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: latest
+      - run: bun --version
+      - run: bun .github/scripts/smoke-dist.mjs test/fixtures
+
+  deno:
+    name: smoke (deno)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - run: pnpm run build
+      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
+        with:
+          deno-version: v2.x
+      - run: deno --version
+      - run: deno run --allow-read .github/scripts/smoke-dist.mjs test/fixtures
+
+  libreoffice:
+    name: libreoffice
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - name: Install LibreOffice Writer and metric-compatible fonts
+        # Carlito = Calibri, Caladea = Cambria, Liberation = Arial/Times New Roman/Courier New,
+        # so page counts match documents written in Word's default fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libreoffice-writer fonts-crosextra-carlito fonts-crosextra-caladea fonts-liberation
+          soffice --version
+      - run: pnpm run build
+      - run: node scripts/libreoffice-check.mjs test/fixtures
+
+  ci-ok:
+    if: always()
+    needs: [verify, package, bun, deno, libreoffice]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: All required jobs passed
+        run: |
+          if [ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" = "true" ]; then
+            exit 1
+          fi

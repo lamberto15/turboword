@@ -1,0 +1,26 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directories: ["/", "/.github/actions/*"] # workflows and the composite setup action
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7 # same cooldown as the version resolver; security updates are not delayed
+    groups:
+      actions:
+        patterns: ["*"]
+  - package-ecosystem: npm # also handles pnpm-lock.yaml
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    ignore:
+      # @types/node tracks the oldest supported Node (engines.node >=22), not the newest
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+    groups:
+      dev-dependencies:
+        dependency-type: development
+      production-dependencies:
+        dependency-type: production
