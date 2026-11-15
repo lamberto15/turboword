@@ -23,7 +23,14 @@ const tool = (cmd: string, args: string[]): boolean => {
   return !r.error;
 };
 export const HAS_QPDF: boolean = tool('qpdf', ['--version']);
-export const HAS_POPPLER: boolean = tool('pdftotext', ['-v']);
+/**
+ * Poppler's pdftotext/pdfinfo/pdfimages/pdftoppm, used as independent readers of our PDFs. Off on
+ * Windows: the poppler builds found on Windows runners lack pdftoppm and `pdfinfo -dests`, and the
+ * PDF bytes are platform-independent (deterministic), so the Linux and macOS runs cover these.
+ */
+export const HAS_POPPLER: boolean =
+  process.platform !== 'win32' &&
+  ['pdftotext', 'pdfinfo', 'pdfimages', 'pdftoppm'].every((t) => tool(t, ['-v']));
 
 /** Runs `cmd args... <file>` on the PDF bytes (written to a temp file). */
 export function runOn(
@@ -58,7 +65,9 @@ export function qpdfCheck(pdf: Uint8Array): { status: number; output: string } {
 
 /** Text extracted by poppler (`pdftotext -raw`, UTF-8), trailing form feeds removed. */
 export function pdfText(pdf: Uint8Array): string {
-  return runOn(pdf, 'pdftotext', ['-raw', '-enc', 'UTF-8'], ['-']).stdout.replace(/\n?\f/g, '\n');
+  return runOn(pdf, 'pdftotext', ['-raw', '-enc', 'UTF-8'], ['-'])
+    .stdout.replace(/\r\n/g, '\n')
+    .replace(/\n?\f/g, '\n');
 }
 
 /** Renders page 1 with pdftoppm and returns RGB pixels. */
