@@ -1,6 +1,6 @@
 {
   "name": "turboword",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Lossless editing and composition of Word .docx files in pure TypeScript: open, edit and save without losing anything, merge documents keeping their headers, footers, sections, styles and numbering. Runs on Node, Bun, Deno, browsers and workers.",
   "keywords": [
     "docx",
