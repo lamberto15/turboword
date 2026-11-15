@@ -1,0 +1,827 @@
+[
+ {
+  "name": "apache-poi/delins.docx",
+  "sha1": "d1a23c5d7d39d57b517b2e6f2decbdb1580564b6",
+  "pages": 1
+ },
+ {
+  "name": "apache-poi/shapes-with-text.docx",
+  "sha1": "e965267d6d0685d94bfff04cbac7c70c715a07bc",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/broken_listing.docx",
+  "sha1": "9486571ae9ca780904a768cd3dc4d58b3483eb51",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/broken_listing_many.docx",
+  "sha1": "0ad4b787c95e9b0001a18616b44b650186ff22fd",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/broken_listing_master.docx",
+  "sha1": "622c2151ae61ddbb8642bfae257583e009a35092",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/broken_listing_nested.docx",
+  "sha1": "8fb0e7ae225c5db15befb89b3fdc135475c5ca07",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/common_stylename_different_id1.docx",
+  "sha1": "cf61c8307743d540d9761c064c19c3458b4b0c70",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/common_stylename_different_id2.docx",
+  "sha1": "6f48c8b30d52ff6c7d37a00c3674d9a670bbc996",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/complex_field_with_split_fieldname.docx",
+  "sha1": "7c56479123ba2317643716ea80709c4716bbc73b",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/complex_field_without_separate.docx",
+  "sha1": "35bc0a3bd77b29a7437d0ae81c798ddc46540f2f",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/content_controls.docx",
+  "sha1": "20a099d93dd7128149726e16a38a8574796cb3db",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/content_controls_multiline_formatted.docx",
+  "sha1": "161c63d828267f8713154203adf7cac2b12a645e",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/continous_section_break.docx",
+  "sha1": "3b062a6d8acd9b2993aa8e90deb4a534bb4f4455",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/custom_list_style.docx",
+  "sha1": "918d920c0e7ce9601ce87294d6c24a3912d3b28a",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/date_docproperties_with_format.docx",
+  "sha1": "e6491f3cbf392edfe38b9ddb7b0a22c72f30068f",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/docproperties.docx",
+  "sha1": "88b61cf9f6c2e789fdd68407d32c9f66e2fc316d",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/docproperties_different_first_page_1_section.docx",
+  "sha1": "7bc79c515a657d0030018564e6cc85927719213e",
+  "pages": 2
+ },
+ {
+  "name": "compose/docxcompose/docproperties_different_odd_even_pages_1_section.docx",
+  "sha1": "a5f3ed8b3a42105e79c63a00783009fc23d6856a",
+  "pages": 2
+ },
+ {
+  "name": "compose/docxcompose/docproperties_footer.docx",
+  "sha1": "492f0e40961d420c0bf53bdadf796487b533d4b2",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/docproperties_header.docx",
+  "sha1": "fea21352f126d747ff94c4a66e9398c581fb1255",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/docproperties_header_footer_3_sections.docx",
+  "sha1": "15b4952f3305dc914dd263e91df533856a700886",
+  "pages": 2
+ },
+ {
+  "name": "compose/docxcompose/docproperties_shared_footer_2_sections.docx",
+  "sha1": "f03653c65ff254901ce44cd12ed29a21026b0244",
+  "pages": 2
+ },
+ {
+  "name": "compose/docxcompose/docproperties_shared_header_2_sections.docx",
+  "sha1": "c589ff0b5d3ab355e7c1558adfd2702278ce6762",
+  "pages": 2
+ },
+ {
+  "name": "compose/docxcompose/docproperties_shared_header_footer_2_sections.docx",
+  "sha1": "32f9776177e1ae7962e89193d4a1b1b6ae63ca74",
+  "pages": 2
+ },
+ {
+  "name": "compose/docxcompose/embedded_and_external_image.docx",
+  "sha1": "4dedb31ade71cc9c297bc8ed244d401102bc6270",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/embedded_excel_chart.docx",
+  "sha1": "ac6207f1fc789d0a49b91a15966a7af705d2681f",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/embedded_visio.docx",
+  "sha1": "38d9438e6b298e36c1dab77b0981681a9f937c93",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/fail_duplicate_list.docx",
+  "sha1": "fd63b84ead9ab8aed25c012d524abe0b8ca9c47a",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/footnote.docx",
+  "sha1": "c786c145fa895fe7fc9ee4d5a251dcda564fea8e",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/footnotes_with_hyperlinks.docx",
+  "sha1": "8b8f5c88ad107c45d5678288de0efdba6356e3c1",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/header_footer.docx",
+  "sha1": "c069e4a70a4f176e185f566c12baf9c09ec15b42",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/header_footer_sections.docx",
+  "sha1": "d15261dd0f18a27a65b97aa58751178a17f5a85c",
+  "pages": 2
+ },
+ {
+  "name": "compose/docxcompose/header_with_image.docx",
+  "sha1": "b04bcfb79fca67fe3b9a1b24347619191904db87",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/hyperlinks.docx",
+  "sha1": "d481696d6121b5db913c4d8ee7fbe1c091dc45b6",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/image.docx",
+  "sha1": "2b7de5f079ac66507efc979033245eafeb2f8672",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/images.docx",
+  "sha1": "564115a0b11b2d45ab2852a08a6ef97deac5b972",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/legacy_empty.docx",
+  "sha1": "a99de29ffc844aa2ee3ca32fd7d5912a7a409ef5",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/master.docx",
+  "sha1": "758666eca39f58baf3d256bbfc59f9c310b15475",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/master_header_footer.docx",
+  "sha1": "6427a016ee37602a0e185137ac02704713cbec88",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/multiple_identical_properties.docx",
+  "sha1": "87f0131944d73da9a95b8c2bb1a6eb1d879b2595",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/next_page_section_break.docx",
+  "sha1": "a8ec297d235cde9af664f9ad43534c1ed9330894",
+  "pages": 2
+ },
+ {
+  "name": "compose/docxcompose/next_page_section_break_empty.docx",
+  "sha1": "0deebefbf2e71291f107222eeb7d0d5547108ed5",
+  "pages": 2
+ },
+ {
+  "name": "compose/docxcompose/numbering_reference_to_numbering_zero.docx",
+  "sha1": "bfe15211be15a5a394b350a7c394a244ff34a9cb",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/numbering_with_paragraphs_in_between.docx",
+  "sha1": "2f2b980dcde3f5219c1f8fb8d85cda95af1a4c77",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/numberings.docx",
+  "sha1": "a5e0e37c70726e136f2225e86add96beaa040527",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/numberings_restart.docx",
+  "sha1": "3444c29a2bc3b2d666d6fd47a362f309082cde5e",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/numberings_styles.docx",
+  "sha1": "3ff4d1c4c8c54ffe400b17209c53208595c76eb0",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/odd_section_break.docx",
+  "sha1": "b06e6cd887c4c26cc39ad884e5a8ad6a8097ca85",
+  "pages": 3
+ },
+ {
+  "name": "compose/docxcompose/outdated_docproperty_with_umlauts.docx",
+  "sha1": "4c7af819ff3469af0cb7a3fa46dd606a335299cc",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/smart_art.docx",
+  "sha1": "38e72186546bae4bf5771eab5221ad1c9b21088b",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/spellchecked_docproperty.docx",
+  "sha1": "5bd7587c1f9b1f12fe48684ec6c7fb3b1bfb7d44",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/styles_de.docx",
+  "sha1": "e40ad10a57d16bcb27bd8acadab572960be084ef",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/styles_default1.docx",
+  "sha1": "74c31b02d5416a3da2a6aa531acfbc6b7d9d2152",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/styles_default2.docx",
+  "sha1": "c05dffee67905389f7c98d88f37abcd10018cefe",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/styles_en.docx",
+  "sha1": "edad5f3df564d4753dfa0879ced52f8413685952",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/styles_preserve1.docx",
+  "sha1": "d64d08f80692369605e0124b7010351ddbef60a7",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/styles_preserve2.docx",
+  "sha1": "eb6a8a8beb2a4a4183822055a4789e943adff1fe",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/table.docx",
+  "sha1": "2c3721db5a5b666057621245a53f227bfa6205d5",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/three_props_in_same_paragraph.docx",
+  "sha1": "9cbf8a17dfaf058c9fa9ce1d58e7dbb613c91db2",
+  "pages": 1
+ },
+ {
+  "name": "compose/docxcompose/two_textnodes_in_run_docproperty.docx",
+  "sha1": "c0d787045280c405e48b2cddb521e957575eeec9",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB001-Sections.docx",
+  "sha1": "76ddb5bf624f95f6743462c943e2a7d9e57303aa",
+  "pages": 6
+ },
+ {
+  "name": "compose/powertools/DB002-Landscape-Section.docx",
+  "sha1": "63fec857784917e3065809ffbd9885878f9ed42c",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB002-Sections-With-Headers.docx",
+  "sha1": "2be3da5f521ebc922aebae0f5133f4f7fdee7552",
+  "pages": 4
+ },
+ {
+  "name": "compose/powertools/DB003-Only-Default-Header.docx",
+  "sha1": "f59c82eb5befb967fea6356792b1a6628825d189",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB004-No-Headers.docx",
+  "sha1": "44f46d87590bf5b7a3fe4e8f9ebb729d1c432996",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB005-Headers-With-Images.docx",
+  "sha1": "d7ab5a3427f4969d7a1d49be1a387824d1341906",
+  "pages": 5
+ },
+ {
+  "name": "compose/powertools/DB006-Source1.docx",
+  "sha1": "66d420cf0e7c164c54fca08e2ca5f1f304ae71a4",
+  "pages": 3
+ },
+ {
+  "name": "compose/powertools/DB006-Source3.docx",
+  "sha1": "7d76da9733d68735b8dc651291a39506002d668d",
+  "pages": 3
+ },
+ {
+  "name": "compose/powertools/DB007-Abstract.docx",
+  "sha1": "36b11aa4721bcddc65f55f16f71a71302479c095",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB007-AuthorBiography.docx",
+  "sha1": "97709247d4def6c33bc906f045650766626da474",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB007-Notes.docx",
+  "sha1": "f3f28da902baba1428a14f2a0d9561702d675d3f",
+  "pages": 2
+ },
+ {
+  "name": "compose/powertools/DB007-Spec.docx",
+  "sha1": "43d6921c9b60b3750ede93c98823d072771efb9d",
+  "pages": 5
+ },
+ {
+  "name": "compose/powertools/DB007-WhitePaper.docx",
+  "sha1": "4105f6eb95f884cae6be6cabaad3a4523d9301dd",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB010-FrontMatter.docx",
+  "sha1": "6e54fd8769dfe3854cbfec2120d0bdbf7ee1c0b4",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB010-Insert-01.docx",
+  "sha1": "cbd9aef50b10e7b5e953ab688418d19ad3b736a2",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB010-Insert-02.docx",
+  "sha1": "06d9f70b22de6ab0e520ec9f35c4c95e1d4da386",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB010-Template.docx",
+  "sha1": "1c8dd2774f7a3c583bdd59518a9a229db48c14a2",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB011-Body-With-Shape.docx",
+  "sha1": "b00183ff89371bea39a1295c58469947d86e4a5f",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB011-Header-With-Shape.docx",
+  "sha1": "7ea1ef239f50735cca9d2b3c1d08a0a346afa537",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB012-Lists-With-Different-Numberings.docx",
+  "sha1": "b57410834bedb4f9dbd3c3ea84d44d35b7197fcf",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB013a-Green-Heading1-Danish.docx",
+  "sha1": "73df72e9c111179d0ef6da856f54fa788c9e7814",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB013a-Red-Heading1-English.docx",
+  "sha1": "253b5c9ea657b94b1d0fe4ae86738c7637544af6",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB013b-Blue-List-English.docx",
+  "sha1": "d3721993e6e0b004c2aceb02acbb10945fb00a88",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB013b-Orange-List-Danish.docx",
+  "sha1": "30ef0b6e98ac902503eaf02237cf4f0738a32db2",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB014-WebExtensions.docx",
+  "sha1": "857ae7519ce0762f9c19ad5eab5bbc2a99a74c07",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__GlossaryDocuments__BaseDocument.docx",
+  "sha1": "c23b34c5e0b462956be04f47560dd0cc4872bf9a",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__GlossaryDocuments__CellLevelContentControl.docx",
+  "sha1": "dfcd6e929b93d000a2d1c2e29b6cac4f86d2bb9e",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__GlossaryDocuments__ContentControlDanishProofingLanguage.docx",
+  "sha1": "4dbbb6d73b184b70059ee78ef72e1e00c8b7ae63",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__GlossaryDocuments__ContentControlEnglishProofingLanguage.docx",
+  "sha1": "58b20d1d6205c7b9bff1a3a1fb6536139882a500",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__GlossaryDocuments__ContentControlMixedProofingLanguage.docx",
+  "sha1": "0c49275da3c28386605db380cca2e393e5e72250",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__GlossaryDocuments__ContentControlWithContent.docx",
+  "sha1": "b8aeec957eedc43057a42a1f783fb7bed1477fb0",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__GlossaryDocuments__FooterContent.docx",
+  "sha1": "39bc4f6b23410055d13dba6e7280e581bab95539",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__GlossaryDocuments__InlineContentControl.docx",
+  "sha1": "c04105f79d80daca21e53aa965e5e7e7f577b8e8",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__GlossaryDocuments__MultilineWithBulletPoints.docx",
+  "sha1": "ead3bd4c36029558d7cb978b534ef670eaea1229",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__GlossaryDocuments__NestedContentControl.docx",
+  "sha1": "d5e969030005a3eee52e62a993e75f7bb5c8ca4b",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__GlossaryDocuments__RowLevelContentControl.docx",
+  "sha1": "4ffe8450dc680beee0fcc83d695b549a890aedde",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__HeadersFooters__Dest__Fax.docx",
+  "sha1": "9f2fdd47d28515c2a725df2f33aa27551c1a5b9e",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__HeadersFooters__Dest__Fax_(content_control).docx",
+  "sha1": "c0bf50ffd80e7a5c2ffcf70d347b1e2d39d67062",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__HeadersFooters__Dest__Letter.docx",
+  "sha1": "807dab99d40747ac2ac7d514f70608e38fd73ea3",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__HeadersFooters__Dest__Letter_(content_control).docx",
+  "sha1": "ea462ca0d47eba7896ca5ba536ee48dc88803688",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__HeadersFooters__Dest__Letter_(run-level_insert_element).docx",
+  "sha1": "b415761a45987ba15d9f24afc66fc7cefeeeca13",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__HeadersFooters__Src__Content-Controls.docx",
+  "sha1": "1527eeb9fa8d7b9ef24fd918d1d00f99fecdd832",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__HeadersFooters__Src__Disclaimer.docx",
+  "sha1": "5c05fa5c4816824903f01753ff20544be52e4c0f",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__HeadersFooters__Src__Footer.docx",
+  "sha1": "aa1a5d0b3c076471078606de9883091b8a8c239f",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__HeadersFooters__Src__Letterhead-with-Watermark.docx",
+  "sha1": "112752cf8dbf42d07e205f74824309d894d43231",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__HeadersFooters__Src__Letterhead.docx",
+  "sha1": "ae1ef76e5dfdcc174341f9ab4e6f335d1851a58b",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__HeadersFooters__Src__Logo.docx",
+  "sha1": "be4db6effd43d7e5b6f8fc88e373343a6a874f58",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__HeadersFooters__Src__Watermark-1.docx",
+  "sha1": "08bfc73499e6946bd4d343bbd909fad1c5879313",
+  "pages": 1
+ },
+ {
+  "name": "compose/powertools/DB__HeadersFooters__Src__Watermark-2.docx",
+  "sha1": "12749ca1f59704a761466aa6b614067d9c8bca1b",
+  "pages": 1
+ },
+ {
+  "name": "crypto/apache-poi/EnforcedWith.docx",
+  "sha1": "c21e9e6dcfacbcc1294826dcb840698f745bab45",
+  "pages": 1
+ },
+ {
+  "name": "crypto/apache-poi/bug56076.docx",
+  "sha1": "a1c759df3327980e53592953419fcf58fd366429",
+  "pages": 1
+ },
+ {
+  "name": "crypto/apache-poi/documentProtection_no_protection_tag_existing.docx",
+  "sha1": "47667c44cc88ff426abfa0d876a66ba3a5c4192a",
+  "pages": 1
+ },
+ {
+  "name": "crypto/apache-poi/documentProtection_readonly_no_password.docx",
+  "sha1": "443e2acac267712ffb7cea808440756d825048e6",
+  "pages": 1
+ },
+ {
+  "name": "crypto/apache-poi/protected_sample.docx",
+  "sha1": "e0fef87971bb572f9658625d7db39654299a298b",
+  "pages": 1
+ },
+ {
+  "name": "crypto/msoffcrypto-tool/example.docx",
+  "sha1": "7b0d5e275966b89daae679fd706b470cde8ab1f7",
+  "pages": 1
+ },
+ {
+  "name": "docx-mailmerge/test_footnote_header_footer.docx",
+  "sha1": "2f8f14e0869dfff35ab3263afb315ba4f781df81",
+  "pages": 3
+ },
+ {
+  "name": "fields/test_field_with_paragraph.docx",
+  "sha1": "92c6f927fcda89886ce44df168eb6fd2a8130f37",
+  "pages": 1
+ },
+ {
+  "name": "fields/test_field_with_paragraph_and_nested_field.docx",
+  "sha1": "e6b00af3e78e61c1fd83db55e9a93ba794b934f1",
+  "pages": 1
+ },
+ {
+  "name": "fields/test_if_with_paragraph.docx",
+  "sha1": "3590d1d10f6d8f0c9d433a3fc8141276e07a1485",
+  "pages": 1
+ },
+ {
+  "name": "fields/test_keep_fields.docx",
+  "sha1": "e7a559b92289bd2aef1483c1b4a56c0aa2f29176",
+  "pages": 1
+ },
+ {
+  "name": "fields/test_macword2011.docx",
+  "sha1": "a0aa1777e9ae40cc88757f23a4d241365d2495d2",
+  "pages": 1
+ },
+ {
+  "name": "fields/test_merge_table_rows.docx",
+  "sha1": "f7011e1b86b2a40105dd679950f09cb545c6476a",
+  "pages": 1
+ },
+ {
+  "name": "fields/test_nested_if_inside.docx",
+  "sha1": "fe2c3252906987f22790e509b5823fc74656cc6f",
+  "pages": 1
+ },
+ {
+  "name": "fields/test_nested_if_outside.docx",
+  "sha1": "d04c772cb88bb172f6781a8958b3ce37ed5d3abe",
+  "pages": 1
+ },
+ {
+  "name": "fields/test_skipif.docx",
+  "sha1": "98de202785ad5e3f0eda4d9d5462ddc1c8ac4587",
+  "pages": 1
+ },
+ {
+  "name": "fields/test_spaces.docx",
+  "sha1": "244ba11e9e7a582b7408b4ba483ebb1fee83ed5a",
+  "pages": 1
+ },
+ {
+  "name": "fields/test_unbalanced_quote_date_field.docx",
+  "sha1": "d003d86c819d5004ef06de781007f13b69292586",
+  "pages": 1
+ },
+ {
+  "name": "fields/test_winword2010.docx",
+  "sha1": "f9d1bd7a296d0b8cf6edfdbcbb6cc76f4e1246de",
+  "pages": 1
+ },
+ {
+  "name": "forms/apache-poi/Bug54771a.docx",
+  "sha1": "902ec854a48b7240c3033d68bb58fbb748d28f17",
+  "pages": 1
+ },
+ {
+  "name": "forms/apache-poi/Bug54849.docx",
+  "sha1": "4c696b3ac74557954bb0caca36b594f16d8aa2e9",
+  "pages": 1
+ },
+ {
+  "name": "forms/apache-poi/checkboxes.docx",
+  "sha1": "0f5b5fe0493277b1902d06f8bb53bc130fa30b82",
+  "pages": 1
+ },
+ {
+  "name": "forms/apache-poi/form_footnotes.docx",
+  "sha1": "39fb2693bd8caeef14cf9b67dea6e09af9b7f310",
+  "pages": 3
+ },
+ {
+  "name": "forms/docx4j/LegacyForms.docx",
+  "sha1": "9c2d9ab013962f20155e890f78487e53ff070a38",
+  "pages": 1
+ },
+ {
+  "name": "forms/docx4j/invoice2013.docx",
+  "sha1": "33f2251162a58de35cd18902b4cc7d766dda0597",
+  "pages": 1
+ },
+ {
+  "name": "forms/open-xml-sdk/sdtCell.docx",
+  "sha1": "dff0f4ce9ca5d544ad0c9a7eb1b711653bfee713",
+  "pages": 1
+ },
+ {
+  "name": "forms/open-xml-sdk/sdtDataBinding.docx",
+  "sha1": "812d58495eccf30ed9507b707c689ca9c9d4b049",
+  "pages": 1
+ },
+ {
+  "name": "forms/open-xml-sdk/sdtRow.docx",
+  "sha1": "4e71950fddebc6cc160ca04ef85d2ceadb0a05cd",
+  "pages": 1
+ },
+ {
+  "name": "forms/open-xml-sdk/sdtRun.docx",
+  "sha1": "377772c8bddc521fa34f6706589b85201c4f3c1c",
+  "pages": 1
+ },
+ {
+  "name": "forms/open-xml-sdk/simpleSdt.docx",
+  "sha1": "943041ef44c39ec4b6fa07d9e6f60f85c5068ba4",
+  "pages": 1
+ },
+ {
+  "name": "graphics/apache-poi/61745.docx",
+  "sha1": "576312507ff6552e2dfa261a887b42acc15be065",
+  "pages": 1
+ },
+ {
+  "name": "graphics/apache-poi/VariousPictures.docx",
+  "sha1": "f1232a5380472fdf014fd3818c4fe460d5c574a8",
+  "pages": 1
+ },
+ {
+  "name": "graphics/apache-poi/chartex.docx",
+  "sha1": "8ceb5c2ce77401e9f9b7cd92dfa801164d0480db",
+  "pages": 3
+ },
+ {
+  "name": "open-xml-sdk/TOC2.docx",
+  "sha1": "aaa1ac2f9d997dc9273b1e10921481c217110b74",
+  "pages": 1
+ },
+ {
+  "name": "open-xml-sdk/TableFntEdnt.docx",
+  "sha1": "638528ce9893036cc230cf9f69009b1048b6b25b",
+  "pages": 1
+ },
+ {
+  "name": "open-xml-sdk/strict-CommentRangeStart.docx",
+  "sha1": "2ae9595cf1e3104a7cb2992ca2246a8ac76849b7",
+  "pages": 1
+ },
+ {
+  "name": "open-xml-sdk/strict-footer-bookmarkStart.docx",
+  "sha1": "2c126a3e5b0b85101cc7fb40395de97e3a95e2b9",
+  "pages": 1
+ },
+ {
+  "name": "python-docx/comments-rich-para.docx",
+  "sha1": "f8b478b4fcce4cb30060ded197b49aac202bc47e",
+  "pages": 1
+ },
+ {
+  "name": "python-docx/tbl-cell-access.docx",
+  "sha1": "c91f47408fa4c41a36450082b8cec2b454a70f96",
+  "pages": 1
+ },
+ {
+  "name": "resolve/docx4j-25a-bullets.docx",
+  "sha1": "502ace0cbce96f2ea83885ec080929be64a68d31",
+  "pages": 1
+ },
+ {
+  "name": "resolve/docx4j-Eastern_Arabic_numbering.docx",
+  "sha1": "19da034b6c5a728ed166cf3f2039b90c64d2fd90",
+  "pages": 3
+ },
+ {
+  "name": "resolve/docx4j-NumberingImplicitNumId.docx",
+  "sha1": "edfdfd81d914d7f891175b9dd6383a8090accfd2",
+  "pages": 1
+ },
+ {
+  "name": "resolve/docx4j-article-section-NotIsLgl.docx",
+  "sha1": "5c2664055f0480822098c793a6d9051752deb231",
+  "pages": 1
+ },
+ {
+  "name": "resolve/docx4j-article-section-isLgl.docx",
+  "sha1": "f770fecfed603d663d72850aa7773c42ac0ff319",
+  "pages": 1
+ },
+ {
+  "name": "resolve/docx4j-cn-1-labels-word365.docx",
+  "sha1": "bf9d4f2b47b5e99e9558d25650a341f7606e3b2f",
+  "pages": 6
+ },
+ {
+  "name": "resolve/docx4j-numbering_indentation.docx",
+  "sha1": "4b280f27e09137873b767b9b61bce72a842162aa",
+  "pages": 1
+ },
+ {
+  "name": "resolve/docx4j-numbering_indentation_firstline.docx",
+  "sha1": "24ba943bb0c72bccb1b8fd136742e7db99e776e9",
+  "pages": 1
+ },
+ {
+  "name": "resolve/docx4j-startOverride.docx",
+  "sha1": "329cf0158b86131d8e12fd509067f265efc6791a",
+  "pages": 1
+ },
+ {
+  "name": "resolve/mammoth-simple-list.docx",
+  "sha1": "4a5f792606b499f1e9aa9d15971bb94588890298",
+  "pages": 1
+ },
+ {
+  "name": "resolve/poi-60316.docx",
+  "sha1": "dd20c673478828e04769cd2bbca43b64efe9a981",
+  "pages": 1
+ },
+ {
+  "name": "resolve/poi-ComplexNumberedLists.docx",
+  "sha1": "8f6ca2ab21cc3a4ded901d26804776740fd3d488",
+  "pages": 1
+ },
+ {
+  "name": "resolve/poi-Numbering.docx",
+  "sha1": "4c87a908eef81c130313096bd32f6633fa72892f",
+  "pages": 1
+ },
+ {
+  "name": "resolve/poi-NumberingWOverrides.docx",
+  "sha1": "952c062ec149ce0047129d184ed0612a93da488b",
+  "pages": 1
+ },
+ {
+  "name": "resolve/poi-bug65738.docx",
+  "sha1": "b1a6678f8ad0c0977894b25293c29790f52312ee",
+  "pages": 2
+ },
+ {
+  "name": "resolve/tika-testWORD_numbered_list.docx",
+  "sha1": "16bb7a219f94801e0072761d892cc4fb67641d8c",
+  "pages": 3
+ },
+ {
+  "name": "resolve/tika-testWORD_override_list_numbering.docx",
+  "sha1": "03110f9cf08bfe8fd8ec9cab802939ec8ccbc504",
+  "pages": 2
+ }
+]
