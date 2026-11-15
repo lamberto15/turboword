@@ -1,0 +1,421 @@
+{
+ "description": "Append scenarios (first input = target, the others appended in order) compared by scripts/docxcompose-diff/run.py.",
+ "scenarios": [
+  {
+   "name": "dc-master+embedded_excel_chart",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/compose/docxcompose/embedded_excel_chart.docx"
+   ]
+  },
+  {
+   "name": "dc-master+footnote",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/compose/docxcompose/footnote.docx"
+   ]
+  },
+  {
+   "name": "dc-master+footnotes_with_hyperlinks",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/compose/docxcompose/footnotes_with_hyperlinks.docx"
+   ]
+  },
+  {
+   "name": "dc-master_header_footer+header_footer_sections",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master_header_footer.docx",
+    "test/fixtures/compose/docxcompose/header_footer_sections.docx"
+   ]
+  },
+  {
+   "name": "dc-header_footer+header_footer",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/header_footer.docx",
+    "test/fixtures/compose/docxcompose/header_footer.docx"
+   ]
+  },
+  {
+   "name": "dc-header_footer_sections+header_footer_sections",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/header_footer_sections.docx",
+    "test/fixtures/compose/docxcompose/header_footer_sections.docx"
+   ]
+  },
+  {
+   "name": "dc-master+hyperlinks",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/compose/docxcompose/hyperlinks.docx"
+   ]
+  },
+  {
+   "name": "dc-master+images",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/compose/docxcompose/images.docx"
+   ]
+  },
+  {
+   "name": "dc-master+embedded_and_external_image",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/compose/docxcompose/embedded_and_external_image.docx"
+   ]
+  },
+  {
+   "name": "dc-header_with_image+image",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/header_with_image.docx",
+    "test/fixtures/compose/docxcompose/image.docx"
+   ]
+  },
+  {
+   "name": "dc-common_stylename_different_id1+common_stylename_different_id2",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/common_stylename_different_id1.docx",
+    "test/fixtures/compose/docxcompose/common_stylename_different_id2.docx"
+   ]
+  },
+  {
+   "name": "dc-numberings+numberings",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/numberings.docx",
+    "test/fixtures/compose/docxcompose/numberings.docx"
+   ]
+  },
+  {
+   "name": "dc-numberings_restart+numberings_restart",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/numberings_restart.docx",
+    "test/fixtures/compose/docxcompose/numberings_restart.docx"
+   ]
+  },
+  {
+   "name": "dc-numberings_styles+numberings_styles",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/numberings_styles.docx",
+    "test/fixtures/compose/docxcompose/numberings_styles.docx"
+   ]
+  },
+  {
+   "name": "dc-broken_listing_master+broken_listing",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/broken_listing_master.docx",
+    "test/fixtures/compose/docxcompose/broken_listing.docx"
+   ]
+  },
+  {
+   "name": "dc-continous_section_break+odd_section_break",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/continous_section_break.docx",
+    "test/fixtures/compose/docxcompose/odd_section_break.docx"
+   ]
+  },
+  {
+   "name": "dc-next_page_section_break+legacy_empty",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/next_page_section_break.docx",
+    "test/fixtures/compose/docxcompose/legacy_empty.docx"
+   ]
+  },
+  {
+   "name": "dc-master+next_page_section_break_empty",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/compose/docxcompose/next_page_section_break_empty.docx"
+   ]
+  },
+  {
+   "name": "dc-master+embedded_visio",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/compose/docxcompose/embedded_visio.docx"
+   ]
+  },
+  {
+   "name": "dc-master+smart_art",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/compose/docxcompose/smart_art.docx"
+   ]
+  },
+  {
+   "name": "dc-styles_de+styles_en",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/styles_de.docx",
+    "test/fixtures/compose/docxcompose/styles_en.docx"
+   ]
+  },
+  {
+   "name": "dc-master+table",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/compose/docxcompose/table.docx"
+   ]
+  },
+  {
+   "name": "dc-master+header_footer",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/compose/docxcompose/header_footer.docx"
+   ]
+  },
+  {
+   "name": "dc-master+docproperties_header_footer_3_sections",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/compose/docxcompose/docproperties_header_footer_3_sections.docx"
+   ]
+  },
+  {
+   "name": "dc-master+docproperties_different_first_page_1_section",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/compose/docxcompose/docproperties_different_first_page_1_section.docx"
+   ]
+  },
+  {
+   "name": "dc-master+docproperties_different_odd_even_pages_1_section",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/compose/docxcompose/docproperties_different_odd_even_pages_1_section.docx"
+   ]
+  },
+  {
+   "name": "dc-docproperties_header_footer_3_sections+docproperties_shared_header_footer_2_sections",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/docproperties_header_footer_3_sections.docx",
+    "test/fixtures/compose/docxcompose/docproperties_shared_header_footer_2_sections.docx"
+   ]
+  },
+  {
+   "name": "dc-master_header_footer+header_with_image+header_footer",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master_header_footer.docx",
+    "test/fixtures/compose/docxcompose/header_with_image.docx",
+    "test/fixtures/compose/docxcompose/header_footer.docx"
+   ]
+  },
+  {
+   "name": "pt-DB001-Sections+DB001-Sections",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB001-Sections.docx",
+    "test/fixtures/compose/powertools/DB001-Sections.docx"
+   ]
+  },
+  {
+   "name": "pt-DB002-Sections-With-Headers+DB002-Landscape-Section",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB002-Sections-With-Headers.docx",
+    "test/fixtures/compose/powertools/DB002-Landscape-Section.docx"
+   ]
+  },
+  {
+   "name": "pt-DB003-Only-Default-Header+DB002-Landscape-Section",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB003-Only-Default-Header.docx",
+    "test/fixtures/compose/powertools/DB002-Landscape-Section.docx"
+   ]
+  },
+  {
+   "name": "pt-DB004-No-Headers+DB002-Landscape-Section",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB004-No-Headers.docx",
+    "test/fixtures/compose/powertools/DB002-Landscape-Section.docx"
+   ]
+  },
+  {
+   "name": "pt-DB005-Headers-With-Images+DB002-Landscape-Section",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB005-Headers-With-Images.docx",
+    "test/fixtures/compose/powertools/DB002-Landscape-Section.docx"
+   ]
+  },
+  {
+   "name": "pt-DB004-No-Headers+DB002-Sections-With-Headers",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB004-No-Headers.docx",
+    "test/fixtures/compose/powertools/DB002-Sections-With-Headers.docx"
+   ]
+  },
+  {
+   "name": "pt-DB006-Source1+DB006-Source3",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB006-Source1.docx",
+    "test/fixtures/compose/powertools/DB006-Source3.docx"
+   ]
+  },
+  {
+   "name": "pt-DB007-Spec+DB007-WhitePaper+DB007-Abstract+DB007-AuthorBiography",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB007-Spec.docx",
+    "test/fixtures/compose/powertools/DB007-WhitePaper.docx",
+    "test/fixtures/compose/powertools/DB007-Abstract.docx",
+    "test/fixtures/compose/powertools/DB007-AuthorBiography.docx"
+   ]
+  },
+  {
+   "name": "pt-DB011-Header-With-Shape+DB011-Body-With-Shape",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB011-Header-With-Shape.docx",
+    "test/fixtures/compose/powertools/DB011-Body-With-Shape.docx"
+   ]
+  },
+  {
+   "name": "pt-DB012-Lists-With-Different-Numberings+DB012-Lists-With-Different-Numberings",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB012-Lists-With-Different-Numberings.docx",
+    "test/fixtures/compose/powertools/DB012-Lists-With-Different-Numberings.docx"
+   ]
+  },
+  {
+   "name": "pt-DB013a-Red-Heading1-English+DB013a-Green-Heading1-Danish",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB013a-Red-Heading1-English.docx",
+    "test/fixtures/compose/powertools/DB013a-Green-Heading1-Danish.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Fax+Content-Controls",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Fax.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Content-Controls.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Fax+Disclaimer",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Fax.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Disclaimer.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Fax+Footer",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Fax.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Footer.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Fax+Letterhead-with-Watermark",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Fax.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Letterhead-with-Watermark.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Fax+Letterhead",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Fax.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Letterhead.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Fax+Logo",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Fax.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Logo.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Fax+Watermark-1",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Fax.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Watermark-1.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Fax+Watermark-2",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Fax.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Watermark-2.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Letter+Content-Controls",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Letter.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Content-Controls.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Letter+Disclaimer",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Letter.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Disclaimer.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Letter+Footer",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Letter.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Footer.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Letter+Letterhead-with-Watermark",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Letter.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Letterhead-with-Watermark.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Letter+Letterhead",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Letter.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Letterhead.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Letter+Logo",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Letter.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Logo.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Letter+Watermark-1",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Letter.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Watermark-1.docx"
+   ]
+  },
+  {
+   "name": "pt-hf-Letter+Watermark-2",
+   "inputs": [
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Dest__Letter.docx",
+    "test/fixtures/compose/powertools/DB__HeadersFooters__Src__Watermark-2.docx"
+   ]
+  },
+  {
+   "name": "corpus-master+test_footnote_header_footer",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/docx-mailmerge/test_footnote_header_footer.docx"
+   ]
+  },
+  {
+   "name": "corpus-test_footnote_header_footer+docproperties_header_footer_3_sections",
+   "inputs": [
+    "test/fixtures/docx-mailmerge/test_footnote_header_footer.docx",
+    "test/fixtures/docxcompose/docproperties_header_footer_3_sections.docx"
+   ]
+  },
+  {
+   "name": "corpus-master+strict-footer-bookmarkStart",
+   "inputs": [
+    "test/fixtures/compose/docxcompose/master.docx",
+    "test/fixtures/open-xml-sdk/strict-footer-bookmarkStart.docx"
+   ]
+  },
+  {
+   "name": "corpus-comments-rich-para+header_with_image",
+   "inputs": [
+    "test/fixtures/python-docx/comments-rich-para.docx",
+    "test/fixtures/docxcompose/header_with_image.docx"
+   ]
+  }
+ ]
+}
