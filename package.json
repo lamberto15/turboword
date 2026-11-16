@@ -64,6 +64,16 @@
         "default": "./dist/fields.cjs"
       }
     },
+    "./mailmerge": {
+      "import": {
+        "types": "./dist/mailmerge.d.ts",
+        "default": "./dist/mailmerge.js"
+      },
+      "require": {
+        "types": "./dist/mailmerge.d.cts",
+        "default": "./dist/mailmerge.cjs"
+      }
+    },
     "./forms": {
       "import": {
         "types": "./dist/forms.d.ts",
@@ -123,6 +133,9 @@
       ],
       "fields": [
         "dist/fields.d.ts"
+      ],
+      "mailmerge": [
+        "dist/mailmerge.d.ts"
       ],
       "forms": [
         "dist/forms.d.ts"
@@ -207,6 +220,12 @@
       "path": "dist/fields.js",
       "import": "*",
       "limit": "53 KB"
+    },
+    {
+      "name": "mailmerge",
+      "path": "dist/mailmerge.js",
+      "import": "*",
+      "limit": "91 KB"
     },
     {
       "name": "forms",

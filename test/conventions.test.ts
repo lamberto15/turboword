@@ -40,6 +40,7 @@ const RANK: Readonly<Record<string, number>> = {
   protect: 5,
   crypto: 5,
   layout: 6,
+  mailmerge: 6,
   render: 7,
   pdf: 7,
   svg: 7,

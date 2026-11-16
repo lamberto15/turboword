@@ -155,6 +155,15 @@ value setUpdateFieldsOnOpen
 value updateFields
 value updateToc
 
+# turboword/mailmerge
+type  MergeOptions
+type  MergeRecord
+type  MergeSeparator
+type  MergedDocument
+value mergeAll
+value mergeEach
+value mergeRecord
+
 # turboword/forms
 type  ContentControl
 type  ContentControlType

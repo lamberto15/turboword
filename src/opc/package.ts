@@ -110,6 +110,8 @@ export class OpcPackage {
   #removed = new Set<string>();
   #contentTypes: ContentTypes | undefined;
   #rels: Relationships | undefined;
+  /** uniqueName(): template → the last number it returned. */
+  readonly #nameCounters = new Map<string, number>();
 
   private constructor(
     source: Uint8Array | undefined,
@@ -250,9 +252,15 @@ export class OpcPackage {
   /** First free name from a template with `{n}` (n = 1, 2, ...), e.g. 'word/header{n}.xml'. */
   uniqueName(template: string): string {
     if (!template.includes('{n}')) throw new UsageError(`Name template lacks {n}: ${template}`);
-    for (let n = 1; ; n++) {
+    // Resume after the last number this template handed out: the names below it were taken
+    // then, so counting from 1 again would make n new parts cost O(n²) probes.
+    const from = this.#nameCounters.get(template) ?? 1;
+    for (let n = from; ; n++) {
       const name = normalizePartName(template.replaceAll('{n}', String(n)));
-      if (!this.#parts.has(partKey(name))) return name;
+      if (!this.#parts.has(partKey(name))) {
+        this.#nameCounters.set(template, n);
+        return name;
+      }
     }
   }
 

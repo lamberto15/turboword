@@ -14,6 +14,7 @@ const ENTRIES: Record<string, string> = {
   turboword: 'src/index.ts',
   'turboword/compose': 'src/compose/index.ts',
   'turboword/fields': 'src/fields/index.ts',
+  'turboword/mailmerge': 'src/mailmerge/index.ts',
   'turboword/forms': 'src/forms/index.ts',
   'turboword/crypto': 'src/crypto/index.ts',
   'turboword/layout': 'src/layout/index.ts',

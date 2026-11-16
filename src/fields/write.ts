@@ -366,3 +366,32 @@ function splitInto(
     prev = np;
   }
 }
+
+/**
+ * Replaces a field by its result (Word's "Unlink field", Ctrl+Shift+F9): the field code, its
+ * nested fields and the `begin`/`separate`/`end` markers go; the result runs stay where they
+ * are. Range markers inside the code whose partner lies outside are kept. Returns false (and
+ * changes nothing) when the code crosses table cells or holds a section break.
+ */
+export function unlinkField(s: Scan): boolean {
+  if (s.kind === 'simple') {
+    const fld = s.begin;
+    for (const k of fld.children.slice()) {
+      if (k.nodeType === 1 && k.is(NS.w, 'fldData')) continue;
+      fld.before(k);
+    }
+    fld.remove();
+    return true;
+  }
+  const beginRun = isolate(s.begin);
+  if (beginRun === undefined) return false;
+  const endRun = isolate(s.end);
+  if (endRun === undefined) return false;
+  const sepRun = s.separate === undefined ? endRun : isolate(s.separate);
+  if (sepRun === undefined) return false;
+  if (!removeBetween(beginRun, sepRun)) return false;
+  beginRun.remove();
+  if (sepRun !== endRun) sepRun.remove();
+  endRun.remove();
+  return true;
+}

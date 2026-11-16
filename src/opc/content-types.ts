@@ -1,9 +1,11 @@
 // View over [Content_Types].xml: `<Default Extension ContentType>` maps an extension to a content
 // type, `<Override PartName ContentType>` names one part explicitly and wins over the default.
 //
-// The view keeps no state of its own: every call reads the DOM, so edits made through `xml`
-// directly are seen, and every edit made here goes through DOM methods (the part becomes dirty
-// and is re-serialized on save). Part names compare case-insensitively and percent-decoded.
+// The DOM is the only source of truth: edits made through `xml` directly are seen, and every edit
+// made here goes through DOM methods (the part becomes dirty and is re-serialized on save). Part
+// names compare case-insensitively and percent-decoded. Override lookups go through an index that
+// is rebuilt when the DOM changed since it was built (XDocument.version) and kept up to date by
+// setOverride/removeOverride, so packages with thousands of parts stay linear.
 
 import type { XDocument, XElement } from '../xml/dom.js';
 import { normalizePartName, partExtension, partKey } from './uri.js';
@@ -14,6 +16,9 @@ const normalizeExt = (ext: string): string =>
 
 export class ContentTypes {
   readonly #doc: XDocument;
+  /** partKey → its `<Override>` elements, valid while the DOM is at `#version`. */
+  #overrides: Map<string, XElement[]> | undefined;
+  #version = -1;
 
   /** @internal */
   constructor(doc: XDocument) {
@@ -66,21 +71,27 @@ export class ContentTypes {
     const existing = this.#findOverrides(partName)[0];
     if (existing !== undefined) {
       existing.setAttr('ContentType', contentType);
+      this.#version = this.#doc.version;
       return;
     }
     const root = this.#doc.root;
-    root.append(
-      childElement(root, 'Override', [
-        ['PartName', `/${normalizePartName(partName)}`],
-        ['ContentType', contentType],
-      ]),
-    );
+    const el = childElement(root, 'Override', [
+      ['PartName', `/${normalizePartName(partName)}`],
+      ['ContentType', contentType],
+    ]);
+    root.append(el);
+    this.#overrides?.set(partKey(partName), [el]);
+    this.#version = this.#doc.version;
   }
 
   /** Removes a part's override(s); returns whether there was one. */
   removeOverride(partName: string): boolean {
     const found = this.#findOverrides(partName);
     for (const el of found) el.remove();
+    if (found.length > 0) {
+      this.#overrides?.delete(partKey(partName));
+      this.#version = this.#doc.version;
+    }
     return found.length > 0;
   }
 
@@ -119,10 +130,20 @@ export class ContentTypes {
   }
 
   #findOverrides(partName: string): XElement[] {
-    const key = partKey(partName);
-    return childrenNamed(this.#doc.root, 'Override').filter((el) => {
-      const name = el.attr('PartName');
-      return name !== undefined && partKey(name) === key;
-    });
+    let index = this.#overrides;
+    if (index === undefined || this.#version !== this.#doc.version) {
+      index = new Map();
+      for (const el of childrenNamed(this.#doc.root, 'Override')) {
+        const name = el.attr('PartName');
+        if (name === undefined) continue;
+        const key = partKey(name);
+        const list = index.get(key);
+        if (list === undefined) index.set(key, [el]);
+        else list.push(el);
+      }
+      this.#overrides = index;
+      this.#version = this.#doc.version;
+    }
+    return index.get(partKey(partName))?.slice() ?? [];
   }
 }

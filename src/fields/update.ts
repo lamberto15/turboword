@@ -15,7 +15,13 @@ import type { Story } from '../wml/story.js';
 import type { XElement } from '../xml/dom.js';
 import { NS } from '../xml/ns.js';
 import { DocInfo } from './docinfo.js';
-import { BUILTINS, KNOWN_TYPES, type Outcome, type UpdateState } from './evaluate.js';
+import {
+  BUILTINS,
+  KNOWN_TYPES,
+  type MergeState,
+  type Outcome,
+  type UpdateState,
+} from './evaluate.js';
 import { toField, toFields } from './model.js';
 import { attached, joinPieces, onOff, type Scan, scanStory } from './scan.js';
 import { setUpdateFieldsOnOpen } from './settings.js';
@@ -41,6 +47,8 @@ interface Run {
   current: Map<Scan, string>;
   updated: number;
   skipped: Field[];
+  /** Fields whose result was evaluated (written, or evaluated without a result: SET, NEXT...). */
+  done: Set<Scan>;
   toc: { pages?: PageInfoProvider | undefined; levels?: [number, number] | undefined };
 }
 
@@ -188,12 +196,16 @@ function updateOne(run: Run, s: Scan): boolean {
   }
   const out = evaluate(run, s, p, instruction);
   if (out === undefined) return false;
-  if (out.noWrite) return true;
+  if (out.noWrite) {
+    run.done.add(s);
+    return true;
+  }
   const charFormat = p.switches.some((x) => x.name === '\\*' && /^charformat$/i.test(x.arg ?? ''));
   const rPr = templateProps(s, charFormat);
   if (!writeResult(s, out.text, rPr, out.format)) return false;
   clearDirty(s);
   run.current.set(s, out.text);
+  run.done.add(s);
   return true;
 }
 
@@ -261,7 +273,24 @@ export function updateFieldsImpl(
   doc: WordDocument,
   o: UpdateFieldsOptions = {},
 ): UpdateFieldsResult {
+  return runUpdate(doc, o).result;
+}
+
+/** What a mail merge (src/mailmerge) needs on top of the public options. */
+export interface MergeHooks {
+  merge: MergeState;
+  /** Called before the fields of each story are updated (the body comes first). */
+  enterStory(story: Story, st: UpdateState): void;
+}
+
+/** One update run; also returns the scans and which of them were evaluated (for src/mailmerge). */
+export function runUpdate(
+  doc: WordDocument,
+  o: UpdateFieldsOptions = {},
+  hooks?: MergeHooks,
+): { result: UpdateFieldsResult; scans: Map<Story, Scan[]>; done: Set<Scan> } {
   const st = makeState(doc, o);
+  if (hooks !== undefined) st.merge = hooks.merge;
   const run: Run = {
     st,
     types: o.types === undefined ? undefined : new Set(o.types.map((t) => t.toUpperCase())),
@@ -272,6 +301,7 @@ export function updateFieldsImpl(
     current: new Map(),
     updated: 0,
     skipped: [],
+    done: new Set(),
     toc: { pages: o.pages },
   };
   const stories = doc.stories();
@@ -281,10 +311,15 @@ export function updateFieldsImpl(
     computeSeq(st, story, scans);
   }
   for (const story of stories) {
+    hooks?.enterStory(story, st);
     for (const s of run.scans.get(story)!) if (s.parent === undefined) processTree(run, s);
   }
   if (o.markForWord === true) setUpdateFieldsOnOpen(doc, true);
-  return { updated: run.updated, skipped: run.skipped };
+  return {
+    result: { updated: run.updated, skipped: run.skipped },
+    scans: run.scans,
+    done: run.done,
+  };
 }
 
 /** Rebuilds every TOC field of the body; returns how many were rebuilt. */
