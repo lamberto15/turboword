@@ -13,6 +13,7 @@
     "dist/index.d.ts",
     "dist/compose.d.ts",
     "dist/fields.d.ts",
+    "dist/mailmerge.d.ts",
     "dist/forms.d.ts",
     "dist/crypto.d.ts",
     "dist/layout.d.ts",

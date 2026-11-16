@@ -155,3 +155,31 @@ export function setUpdateFieldsOnOpen(doc: WordDocument, on = true): void {
   if (el) setWAttr(el, 'val', 'true');
   else insertOrdered(root, wElement(root, 'updateFields', { val: 'true' }), SETTINGS_ORDER);
 }
+
+/**
+ * Removes the mail-merge setup (`w:mailMerge`: document type, data source, query) and the
+ * relationships it uses (data and header sources), so Word opens a merged document as a plain
+ * document instead of asking to run the query against the original data source. Returns true
+ * when there was one.
+ */
+export function removeMailMerge(doc: WordDocument): boolean {
+  const part = doc.mainPart.relatedByType('settings')[0];
+  if (part === undefined) return false;
+  const found = part.xml().root.elements(NS.w, 'mailMerge');
+  if (found.length === 0) return false;
+  for (const mm of found) {
+    for (const el of [mm, ...mm.descendants()]) {
+      const id = el.attrNS(NS.r, 'id');
+      if (id !== undefined) part.rels.remove(id);
+    }
+    mm.remove();
+  }
+  return true;
+}
+
+/** The document type of the mail-merge setup (`w:mainDocumentType`), if any. */
+export function mailMergeType(doc: WordDocument): string | undefined {
+  const part = doc.mainPart.relatedByType('settings')[0];
+  const mm = part?.xml().root.element(NS.w, 'mailMerge');
+  return mm?.element(NS.w, 'mainDocumentType')?.attrNS(NS.w, 'val');
+}

@@ -30,6 +30,8 @@ L5 fields   field index, switch formatting, evaluators, TOC
 L5 forms    content controls, custom XML data binding, legacy form fields
 L5 protect  documentProtection hashes
 L5 crypto   ECMA-376 Agile / Standard encryption over CFB
+L6 mailmerge  records → merged documents (table-row repeats, NEXT/NEXTIF/SKIPIF, unlinking),
+            over fields and compose
 L6 layout   fonts (sfnt, embedded, substitutes, base-14), text (UAX #14, UAX #9, scripts,
             shaper), IR, line (paragraph layout), page (pagination, tables, floats, notes),
             graphics (shapes, charts, EMF/WMF, OMML) → PageModel
@@ -37,7 +39,7 @@ L7 render   pdf (writer, TrueType subsetting, ToUnicode, images, links, outline)
 ```
 
 `test/conventions.test.ts` holds the exact ranks: `core` 0; `zip`, `xml` 1; `opc` 2; `wml` 3;
-`resolve`, `text` 4; `compose`, `fields`, `forms`, `protect`, `crypto` 5; `layout` 6; `render` 7.
+`resolve`, `text` 4; `compose`, `fields`, `forms`, `protect`, `crypto` 5; `layout`, `mailmerge` 6; `render` 7.
 Same-rank siblings never import each other: `fields` cannot import `forms`, and `crypto` cannot
 import `protect` (which is why the SHA hashes both need live in `core`).
 
@@ -120,6 +122,7 @@ codes such as `VALIDATION`, `FONT_FORMAT` and `BAD_PASSWORD`. Recoverable proble
 | `turboword` | document model, editing, text search/replace, revisions, resolve, protection |
 | `turboword/compose` | `appendDocument`, `insertDocument`, `composeDocuments`, `importBlocks` |
 | `turboword/fields` | field index, evaluators, TOC |
+| `turboword/mailmerge` | `mergeRecord`, `mergeEach`, `mergeAll` (mail merge) |
 | `turboword/forms` | content controls, data binding, legacy form fields |
 | `turboword/crypto` | encrypted documents |
 | `turboword/layout` | `paginate`, `pageCount`, `pageInfo`, fonts and Unicode helpers (experimental) |
@@ -181,6 +184,7 @@ src/
                        legacy, date-format
   protect/         L5  documentProtection hashes and settings
   crypto/          L5  cfb (compound file), agile, standard, hash
+  mailmerge/       L6  index.ts (records, table-row expansion, record control, unlinking, mergeAll)
   layout/          L6  types.ts (IR, PageModel), engine.ts (internal seams), ir.ts, paragraph.ts,
                        paginate.ts, table.ts, index.ts
     fonts/             sfnt parser, cmap, kerning, names, embedded (.odttf), substitutions,

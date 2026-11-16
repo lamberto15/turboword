@@ -281,6 +281,32 @@ describe('relationships', () => {
     ).toEqual(['rId1', 'rId2', 'img']);
   });
 
+  it('lookups follow edits made directly to the rels DOM, and toPart finds a target', () => {
+    const pkg = OpcPackage.create();
+    const doc = pkg.addPart('word/document.xml', CT.document, xml(DOCUMENT));
+    doc.rels.add(REL.header, 'header1.xml');
+    expect(doc.rels.toPart('/WORD/header1.xml')!.id).toBe('rId1');
+    expect(doc.rels.toPart('word/header2.xml')).toBeUndefined();
+    // An edit behind the view's back (the DOM is the source of truth).
+    const root = pkg.part('word/_rels/document.xml.rels')!.xml().root;
+    const el = root.elements()[0]!;
+    el.setAttr('Id', 'rId7');
+    el.setAttr('Target', 'header2.xml');
+    expect(doc.rels.get('rId1')).toBeUndefined();
+    expect(doc.rels.get('rId7')!.partName).toBe('word/header2.xml');
+    expect(doc.rels.toPart('word/header2.xml')!.id).toBe('rId7');
+    expect(doc.rels.toPart('word/header1.xml')).toBeUndefined();
+    expect(doc.rels.nextId()).toBe('rId8');
+    // add() keeps the index current; many adds stay unique.
+    for (let i = 0; i < 500; i++) doc.rels.add(REL.image, `media/i${i}.png`);
+    const ids = doc.rels.all().map((r) => r.id);
+    expect(new Set(ids).size).toBe(501);
+    expect(doc.rels.toPart('word/media/i499.png')!.id).toBe('rId507');
+    el.remove();
+    expect(doc.rels.get('rId7')).toBeUndefined();
+    expect(doc.rels.all()).toHaveLength(500);
+  });
+
   it('nextId skips odd ids and stays unique', () => {
     const pkg = OpcPackage.create();
     const p = pkg.addPart('a.xml', CT.xml, xml('<a/>'));
@@ -376,6 +402,41 @@ describe('content types', () => {
     expect(ct.getOverride('word/media/image3.emf')).toBe('image/x-emf');
     expect(ct.getOverride('customXml/item1.xml')).toBeUndefined();
     expect(pkg.part('word/media/image3.emf')!.contentType).toBe('image/x-emf');
+  });
+});
+
+describe('content type and name lookups at scale', () => {
+  it('override lookups follow direct DOM edits', () => {
+    const pkg = OpcPackage.open(buildBytes());
+    const ct = pkg.contentTypes;
+    expect(ct.getOverride('word/document.xml')).toBe(CT.document);
+    const el = ct.xml.root
+      .elements()
+      .find((e) => e.attr('PartName')?.toLowerCase() === '/word/document.xml')!;
+    el.setAttr('PartName', '/word/main.xml');
+    expect(ct.getOverride('word/document.xml')).toBeUndefined();
+    expect(ct.getOverride('WORD/MAIN.XML')).toBe(CT.document);
+    for (let i = 0; i < 300; i++) ct.setOverride(`word/header${i}.xml`, CT.header);
+    expect(ct.getOverride('word/header299.xml')).toBe(CT.header);
+    ct.setOverride('word/header5.xml', CT.footer);
+    expect(ct.getOverride('word/header5.xml')).toBe(CT.footer);
+    expect(ct.removeOverride('word/header5.xml')).toBe(true);
+    expect(ct.getOverride('word/header5.xml')).toBeUndefined();
+    expect(ct.overrides().size).toBeGreaterThanOrEqual(300);
+  });
+
+  it('uniqueName keeps counting up after the last name it returned', () => {
+    const pkg = OpcPackage.create();
+    const names: string[] = [];
+    for (let i = 0; i < 5; i++) {
+      const name = pkg.uniqueName('word/header{n}.xml');
+      pkg.addPart(name, CT.header, xml(HEADER));
+      names.push(name);
+    }
+    expect(names).toEqual([1, 2, 3, 4, 5].map((n) => `word/header${n}.xml`));
+    // Unused names are not skipped: asking twice without adding returns the same name.
+    expect(pkg.uniqueName('word/header{n}.xml')).toBe('word/header6.xml');
+    expect(pkg.uniqueName('word/header{n}.xml')).toBe('word/header6.xml');
   });
 });
 

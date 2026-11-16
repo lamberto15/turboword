@@ -22,6 +22,7 @@ runtime dependency ([fflate](https://github.com/101arrowz/fflate)), on every Jav
 | `turboword` | Open and save losslessly (`readDocx`, `loadDocx`, `writeDocx`, `createDocx`); stories, paragraphs, runs, tables, sections with effective headers and footers; editing (text and formatting, paragraph split/insert/clone/remove, images, hyperlinks, bookmarks, table rows/columns/merges, section and header/footer editing, page setup); document properties; `validatePackage`; find and replace across runs, tracked or not; accept / reject revisions; resolved formatting (style cascade, theme, table styles) and list labels; document protection |
 | `turboword/compose` | `appendDocument`, `insertDocument`, `composeDocuments`, `importBlocks`: merge documents keeping each one's sections, headers and footers, styles, numbering, notes, comments and bookmarks |
 | `turboword/fields` | List, evaluate and update fields (MERGEFIELD, IF, `=`, DATE, DOCPROPERTY, REF, PAGEREF, SEQ, ...) with Word's `\*` `\#` `\@` formatting; rebuild tables of contents |
+| `turboword/mailmerge` | Mail merge with Word's own merge fields: one document per record or all records in one, table rows repeated from arrays, NEXT / NEXTIF / SKIPIF, merged fields turned into plain text as Word does |
 | `turboword/forms` | Content controls (typed values, repeating sections), custom XML data binding, legacy form fields |
 | `turboword/crypto` | Decrypt (Agile and Standard) and encrypt (Agile AES-256) password-protected documents |
 | `turboword/layout` | `paginate`, `pageCount`: pages, lines and glyph positions as plain data (experimental) |
@@ -167,6 +168,46 @@ updateToc(doc); // headings and bookmarks; page numbers too when you pass `pages
 ```
 
 Field codes are never removed: only the results change, so Word can update the fields again.
+
+### Mail merge
+
+Templates use Word's own merge fields (Mailings → Insert Merge Field), not a custom tag syntax.
+
+```ts
+import { readFileSync, writeFileSync } from 'node:fs';
+import { readDocx, writeDocx } from 'turboword';
+import { mergeAll, mergeEach, mergeRecord } from 'turboword/mailmerge';
+
+const template = readDocx(readFileSync('letter.docx'));
+
+// One record → one document (undefined when a SKIPIF field drops the record)
+const letter = mergeRecord(template, {
+  name: 'Ada Lovelace',
+  total: 1234.5, // MERGEFIELD total \# "#,##0.00" → 1,234.50
+  customer: { city: 'London' }, // MERGEFIELD customer.city
+  items: [
+    // an array repeats the table row that holds MERGEFIELD items
+    { items: 'Engine', qty: 1 },
+    { items: 'Cards', qty: 200 },
+  ],
+});
+
+// One document per record, streamed: records are read only as they are merged
+for (const { doc, records } of mergeEach(template, customers)) {
+  writeFileSync(`out/letter-${records[0]}.docx`, writeDocx(doc));
+}
+
+// Every record in one document, each starting a new page with its own headers and footers
+writeFileSync('all.docx', writeDocx(mergeAll(template, customers)));
+```
+
+As in Word's merged documents, MERGEFIELD, IF, NEXT, NEXTIF, SKIPIF, MERGEREC, MERGESEQ and FILLIN
+become plain text (`fields: 'keep'` keeps them live), other fields such as PAGE stay live, and the
+mail-merge data-source setup is removed so Word opens the result without a query prompt. NEXT and
+NEXTIF move to the next record inside one document (labels, lists), SKIPIF drops a record. Missing
+values merge as empty; `missing: 'keep'` leaves those fields, `missing: 'error'` throws.
+`mergeAll` separators: `'section'` (default), a section type such as `'oddPage'`, `'pageBreak'`,
+or `'none'` (the default for Word directory/catalog templates).
 
 ### Content controls and forms
 

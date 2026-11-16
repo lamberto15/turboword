@@ -7,7 +7,7 @@
 
 import type { Part } from '../opc/part.js';
 import { CT, REL } from '../opc/rel-types.js';
-import { partKey, relativeTarget } from '../opc/uri.js';
+import { relativeTarget } from '../opc/uri.js';
 import { XML_DECLARATION } from '../opc/xml-util.js';
 import type { WordDocument } from '../wml/document.js';
 import { type ChildOrder, insertOrdered, makeOrder } from '../wml/order.js';
@@ -216,12 +216,8 @@ export function addMainPart(
 
 /** The id of a relationship from `from` to `to`, added when there is none yet. */
 export function relationshipTo(from: Part, to: Part, relType: string): string {
-  const key = partKey(to.name);
-  for (const rel of from.rels.all()) {
-    if (!rel.external && rel.partName !== undefined && partKey(rel.partName) === key) {
-      return rel.id;
-    }
-  }
+  const existing = from.rels.toPart(to.name);
+  if (existing !== undefined) return existing.id;
   return from.rels.add(relType, relativeTarget(from.name, to.name)).id;
 }
 

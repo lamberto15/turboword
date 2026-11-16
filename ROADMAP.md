@@ -25,11 +25,18 @@ project started with.
 | Layout (experimental) | font stack, UAX #14, UAX #9, paragraph layout, pagination, tables, floats, headers / footers, footnotes, page fields | Unicode conformance files pass 100%; line breaks match LibreOffice on 97.9% of lines (compatibility mode 15); page counts in [docs/fidelity.md](./docs/fidelity.md) |
 | Rendering (experimental) | PDF (subset fonts, images, links, outline), SVG, shapes, charts, EMF / WMF, OMML | `qpdf --check` clean; extracted text equals the laid-out text |
 
+## Since v0.1.0 (unreleased)
+
+| Area | Delivered | Evidence |
+| --- | --- | --- |
+| Mail merge | `turboword/mailmerge`: `mergeRecord`, `mergeEach` (streamed), `mergeAll`; table rows repeated from arrays (nested tables too), NEXT / NEXTIF / SKIPIF / MERGEREC / MERGESEQ, merged fields unlinked as Word does, data-source setup removed | The docx-mailmerge test suite's NEXT, NEXTIF, SKIPIF and IF expectations; every output validated; ~1 ms per document with `mergeEach`; `mergeAll` of 1,000 records with six headers/footers each in ~5 s |
+| Compose at scale | Relationship, content-type, part-name and paragraph-id lookups indexed | Appending 1,000 documents with headers: from 432 s to 5 s |
+
 ## Not done yet
 
-- **Verified in Microsoft Word.** Outputs are checked with `validatePackage` and LibreOffice only.
-  The Word smoke pack (`test/smoke/word-pack.mjs`) must be opened in Word, results recorded in
-  `docs/word-verification.md`, before turboword claims Word compatibility.
+- **Verified in Microsoft Word.** An automated open-only pass of the Word smoke pack in Word for
+  Mac 16.114 found no repair prompt caused by turboword (`docs/word-verification.md`). Still to
+  do: Word for Windows, and a side-by-side visual comparison with the fixtures.
 - **The Open XML SDK validator in CI** (needs .NET), with the rule "no new errors compared with the
   inputs".
 

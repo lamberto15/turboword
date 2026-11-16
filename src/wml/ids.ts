@@ -262,6 +262,9 @@ function prng(seed: number): () => number {
 
 const registries = new WeakMap<OpcPackage, DocumentIds>();
 
+/** Below this many story parts, lookups loop over the parts instead of building a union set. */
+const UNION_MIN_PARTS = 16;
+
 /** The document-wide id registry of a document (see the file header). */
 export class DocumentIds {
   readonly #doc: WordDocument;
@@ -274,6 +277,8 @@ export class DocumentIds {
   readonly #reserved = new IdSets();
   #held = 0;
   readonly #rand = prng(0x7475_7262); // 'turb'
+  /** Per scans snapshot: hex kind → every id of that kind in any part (see #hasHex). */
+  readonly #hexUnion = new WeakMap<readonly Scan[], Map<HexIdKind, Set<string>>>();
 
   private constructor(doc: WordDocument) {
     this.#doc = doc;
@@ -389,8 +394,24 @@ export class DocumentIds {
 
   #hasHex(scans: readonly Scan[], kind: HexIdKind, h: string): boolean {
     if (this.#reserved.hex[kind].has(h)) return true;
-    for (const s of scans) if (s.ids.hex[kind].has(h)) return true;
-    return false;
+    if (scans.length <= UNION_MIN_PARTS) {
+      for (const s of scans) if (s.ids.hex[kind].has(h)) return true;
+      return false;
+    }
+    // Many parts (a merge of many documents): one set per kind over every part, built once per
+    // snapshot (#fresh returns a new array whenever a part was re-scanned; scans never change).
+    let union = this.#hexUnion.get(scans);
+    if (union === undefined) {
+      union = new Map();
+      this.#hexUnion.set(scans, union);
+    }
+    let set = union.get(kind);
+    if (set === undefined) {
+      set = new Set();
+      for (const s of scans) for (const v of s.ids.hex[kind]) set.add(v);
+      union.set(kind, set);
+    }
+    return set.has(h);
   }
 
   /** Up-to-date scans (re-scanning changed parts; nothing while held, after the first scan). */

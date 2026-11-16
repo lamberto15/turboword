@@ -50,6 +50,33 @@ export interface UpdateState {
   /** Set by an evaluator that lacked data (so a parent IF is skipped too). */
   noData: boolean;
   counts?: { words: number; chars: number };
+  /** Mail-merge state (turboword/mailmerge); undefined for a plain updateFields. */
+  merge?: MergeState;
+}
+
+/** What the mail-merge driver (src/mailmerge) lends an update run. */
+export interface MergeState {
+  /** Values for a field inside an expanded table row (the row's item over the record), else undefined. */
+  scope(s: Scan): Readonly<Record<string, unknown>> | undefined;
+  /** A MERGEFIELD the data lacks: 'empty' merges it as '', 'keep' leaves the field as it is. */
+  missing: 'empty' | 'keep';
+  /** MERGEFIELD names the data lacked. */
+  missingNames: Set<string>;
+  /** True once NEXT/NEXTIF ran past the last record: every MERGEFIELD then merges as ''. */
+  exhausted: boolean;
+  /** Moves to the next record (NEXT, NEXTIF) and sets `st.values` to it. */
+  next(st: UpdateState): void;
+  /** Drops the current output document (SKIPIF); throws. */
+  skip(): never;
+  /** MERGEREC: 1-based number of the current record in the data (skipped records count). */
+  record(): number;
+  /** MERGESEQ: 1-based number of the current record among the merged (not skipped) ones. */
+  sequence(): number;
+}
+
+/** The values a field reads: its table-row scope during a merge, else the record. */
+function valuesOf(st: UpdateState, s: Scan): Readonly<Record<string, unknown>> {
+  return st.merge?.scope(s) ?? st.values;
 }
 
 type BuiltIn = (s: Scan, p: ParsedInstruction, st: UpdateState) => Outcome | string | undefined;
@@ -496,10 +523,15 @@ function styleRef(st: UpdateState, s: Scan, p: ParsedInstruction): string | unde
 const SYMBOL_FONTS = /^(symbol|wingdings( [23])?|webdings|marlett)$/i;
 
 export const BUILTINS: Readonly<Record<string, BuiltIn>> = {
-  MERGEFIELD(_s, p, st) {
+  MERGEFIELD(s, p, st) {
     const name = arg(p, 0);
     if (name === undefined) return undefined;
-    const v = lookup(st.values, name);
+    let v = lookup(valuesOf(st, s), name);
+    const m = st.merge;
+    if (v === MISSING && m !== undefined) {
+      if (!m.exhausted) m.missingNames.add(name);
+      if (m.exhausted || m.missing === 'empty') v = '';
+    }
     if (v === MISSING) {
       st.noData = true;
       return undefined;
@@ -517,6 +549,34 @@ export const BUILTINS: Readonly<Record<string, BuiltIn>> = {
     const branch = c.value ? c.rest[0] : c.rest[1];
     return fmtText(st, branch?.text ?? '', p);
   },
+
+  // Mail-merge record control: evaluated only during a merge (turboword/mailmerge), else left
+  // alone. Their result is empty, as Word shows them in merged documents.
+  NEXT(_s, _p, st) {
+    if (st.merge === undefined) return undefined;
+    st.merge.next(st);
+    return '';
+  },
+
+  NEXTIF(s, p, st) {
+    if (st.merge === undefined) return undefined;
+    const c = condition(st, p, s);
+    if (c === undefined) return undefined;
+    if (c.value) st.merge.next(st);
+    return '';
+  },
+
+  SKIPIF(s, p, st) {
+    if (st.merge === undefined) return undefined;
+    const c = condition(st, p, s);
+    if (c === undefined) return undefined;
+    if (c.value) st.merge.skip();
+    return '';
+  },
+
+  MERGEREC: (_s, p, st) => (st.merge === undefined ? undefined : fmtText(st, st.merge.record(), p)),
+  MERGESEQ: (_s, p, st) =>
+    st.merge === undefined ? undefined : fmtText(st, st.merge.sequence(), p),
 
   COMPARE(s, p, st) {
     const c = condition(st, p, s);
@@ -647,9 +707,9 @@ export const BUILTINS: Readonly<Record<string, BuiltIn>> = {
 
   STYLEREF: (s, p, st) => styleRef(st, s, p),
 
-  FILLIN(_s, p, st) {
+  FILLIN(s, p, st) {
     const prompt = arg(p, 0) ?? '';
-    let v = lookup(st.values, prompt);
+    let v = lookup(valuesOf(st, s), prompt);
     if (v === MISSING) v = sw(p, '\\d') ?? MISSING;
     if (v === MISSING) {
       st.noData = true;
@@ -658,12 +718,13 @@ export const BUILTINS: Readonly<Record<string, BuiltIn>> = {
     return fmtText(st, v, p);
   },
 
-  ASK(_s, p, st) {
+  ASK(s, p, st) {
     const name = arg(p, 0);
     if (name === undefined) return undefined;
-    let v = lookup(st.values, name);
+    const values = valuesOf(st, s);
+    let v = lookup(values, name);
     const prompt = arg(p, 1);
-    if (v === MISSING && prompt !== undefined) v = lookup(st.values, prompt);
+    if (v === MISSING && prompt !== undefined) v = lookup(values, prompt);
     if (v === MISSING) v = sw(p, '\\d') ?? MISSING;
     if (v === MISSING) {
       st.noData = true;

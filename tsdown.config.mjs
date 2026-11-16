@@ -5,6 +5,7 @@ export default defineConfig({
     index: 'src/index.ts',
     compose: 'src/compose/index.ts',
     fields: 'src/fields/index.ts',
+    mailmerge: 'src/mailmerge/index.ts',
     forms: 'src/forms/index.ts',
     crypto: 'src/crypto/index.ts',
     layout: 'src/layout/index.ts',
